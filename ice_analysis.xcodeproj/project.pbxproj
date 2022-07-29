@@ -18,6 +18,8 @@
 		B44E594528923D5800B47116 /* ice_analysisUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44E594428923D5800B47116 /* ice_analysisUITests.swift */; };
 		B44E594728923D5800B47116 /* ice_analysisUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44E594628923D5800B47116 /* ice_analysisUITestsLaunchTests.swift */; };
 		B44E595428924F7D00B47116 /* IceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44E595328924F7D00B47116 /* IceCollectionCell.swift */; };
+		B46601B92893BE4200860BB9 /* ValidPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46601B82893BE4200860BB9 /* ValidPickerCell.swift */; };
+		B46601BB2893C20600860BB9 /* globalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46601BA2893C20600860BB9 /* globalConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		B44E594428923D5800B47116 /* ice_analysisUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ice_analysisUITests.swift; sourceTree = "<group>"; };
 		B44E594628923D5800B47116 /* ice_analysisUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ice_analysisUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B44E595328924F7D00B47116 /* IceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IceCollectionCell.swift; sourceTree = "<group>"; };
+		B46601B82893BE4200860BB9 /* ValidPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidPickerCell.swift; sourceTree = "<group>"; };
+		B46601BA2893C20600860BB9 /* globalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,9 +108,11 @@
 			isa = PBXGroup;
 			children = (
 				B44E592028923D5700B47116 /* AppDelegate.swift */,
+				B46601BA2893C20600860BB9 /* globalConstants.swift */,
 				B44E592228923D5700B47116 /* SceneDelegate.swift */,
 				B44E592428923D5700B47116 /* ViewController.swift */,
 				B44E595328924F7D00B47116 /* IceCollectionCell.swift */,
+				B46601B82893BE4200860BB9 /* ValidPickerCell.swift */,
 				B44E592628923D5700B47116 /* Main.storyboard */,
 				B44E592C28923D5800B47116 /* Assets.xcassets */,
 				B44E592E28923D5800B47116 /* LaunchScreen.storyboard */,
@@ -266,6 +272,8 @@
 			files = (
 				B44E592528923D5700B47116 /* ViewController.swift in Sources */,
 				B44E592B28923D5700B47116 /* ice_analysis.xcdatamodeld in Sources */,
+				B46601B92893BE4200860BB9 /* ValidPickerCell.swift in Sources */,
+				B46601BB2893C20600860BB9 /* globalConstants.swift in Sources */,
 				B44E595428924F7D00B47116 /* IceCollectionCell.swift in Sources */,
 				B44E592128923D5700B47116 /* AppDelegate.swift in Sources */,
 				B44E592328923D5700B47116 /* SceneDelegate.swift in Sources */,

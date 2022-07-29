@@ -6,49 +6,135 @@
 //
 
 import UIKit
+import CloudKit
 
-let reuseIdentifier = "CECell";
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var outerResLabel: UILabel!
-    @IBOutlet weak var changeCharactorbtn: UIButton!
-    @IBOutlet weak var charactorLabel: UILabel!
+
+    //各个属性权重
+    var validVals:Array<Double>!
+    var outkeysToId:Dictionary<String,Int>!
     
-    let nameOrdered = ["flower","feather","sand","cup","hat"]
-    let subVerb = ["暴击率","暴击伤害","大攻击","小攻击","元素精通","元素充能","大生命","小生命","大防御","小防御","治疗量","元素伤害"]
+    let subVerb = ["暴击率","暴击伤害","大攻击","小攻击","元素精通","元素充能","大生命","小生命","大防御","小防御","治疗量","元素伤害","物理伤害"]
     let charactorNames = ["神里绫华","八重神子","刻晴","雷电将军","班尼特","枫原万叶","珊瑚宫心海","菲谢尔","甘雨","烟绯","迪卢克","罗莎莉亚","迪奥娜","莫娜","爷","七七","鹿野苑平藏","九条裟罗","钟离","胡桃","草神"]
-    let subVerbMaxVals = [31.1,62.2,46.6,311,187,51.8,4780,4780,58.6,58.6,35.9,46.6]
-    let midPerCount = [3.3,6.6,5.0,50,20,5.5,5.0,600,6.2,43,100,100]
+    let subVerbMaxVals = [31.1,62.2,46.6,311,187,51.8,46.6,4780,58.6,58.6,35.9,46.6,58.6]
+    let midPerCount = [3.3,6.6,5.0,50,20,5.5,5.0,600,6.2,43,100,100,100]
     
-    public var mainContents:Array<String>!
-    public var mainVals:Array<Double>!
-    public var subContents:Array< Array<String>>!
-    public var subVals:Array<Array<Double>>!
-    public var currentName:String = "auto";
+    private var mainContents:Array<String>!
+    private var mainVals:Array<Double>!
+    private var subContents:Array< Array<String>>!
+    private var subVals:Array<Array<Double>>!
+    private var currentName:String = "auto";
     var lastRecev : Int = 0;
     
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! IceCollectionCell
-        print(indexPath.row)
-        cell.setImage(img: UIImage(imageLiteralResourceName: nameOrdered[indexPath.row]), ider: indexPath.row, mC: mainContents[indexPath.row],mV: mainVals[indexPath.row],sC: subContents[indexPath.row],sV: subVals[indexPath.row])
-        cell.backgroundColor = self.randomColor()
-
-        return cell
+        if(indexPath.row < 5){
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! IceCollectionCell
+            print(indexPath.row)
+            cell.setImage(img: UIImage(imageLiteralResourceName: nameOrdered[indexPath.row]), ider: indexPath.row, mC: mainContents[indexPath.row],mV: mainVals[indexPath.row],sC: subContents[indexPath.row],sV: subVals[indexPath.row],estimate: self.scoreEstimate(ider: indexPath.row), validKeys: self.packValidKeys())
+            cell.backgroundColor = self.randomColor()
+            
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusePickerIdentifier, for: indexPath as IndexPath) as! ValidPickerCell
+            print(indexPath.row)
+            var totalScoreNow = 0.0
+            for i in 0 ... 4 {
+                totalScoreNow += self.scoreEstimate(ider: i)
+            }
+            let detail = self.startAnalysis()
+            cell.flushPickColor(validVals: self.validVals, totalscore: totalScoreNow, detailCounts: detail)
+            cell.backgroundColor = self.randomColor()
+            
+            return cell
+        }
+        
     }
     
-    func saveToDefaultsKey(K:String){
-        let defaults = UserDefaults.standard
-        let mainContentsK = K + "?mainContents"
-        let mainValsK = K + "?mainVals"
-        let subContentsK = K + "?subContents"
-        let subValsK = K + "?subVals"
-        defaults.set(self.mainContents, forKey: mainContentsK)
-        defaults.set(self.mainVals, forKey: mainValsK)
-        defaults.set(self.subContents, forKey: subContentsK)
-        defaults.set(self.subVals, forKey: subValsK)
-        self.charactorLabel.text = currentName
+    func convertToAttrDict(i : Int) -> Dictionary<String,Double> {
+        var res = Dictionary<String,Double>()
+        for k in outkeys {
+            res[k] = 0.0
+        }
+        for j in 0 ... 3{
+            var wh = 0;
+            for p in 0 ... 9 {
+                if(subVerb[p] == subContents[i][j]){
+                    wh = p;
+                    break;
+                }
+            }
+            let counter = subVals[i][j] / midPerCount[wh];
+            switch(wh){
+            case 0 :
+                res["暴击"]!+=counter;
+                break
+            case 1 :
+                res["暴伤"]!+=counter;
+                break
+                
+            case 2 :
+                fallthrough
+            case 3 :
+                res["攻击"]!+=counter;
+                break
+                
+            case 4 :
+                res["精通"]!+=counter;
+                break
+                
+            case 5 :
+                res["充能"]!+=counter;
+                break
+                
+            case 6 :
+                fallthrough
+            case 7 :
+                res["生命"]!+=counter;
+                break
+                
+            case 8 :
+                fallthrough
+            case 9 :
+                res["防御"]!+=counter;
+                break
+                
+            default:
+                break
+            }
+        }
+        return res
     }
+    
+    func scoreEstimate(ider : Int) -> Double {
+        var finresval = 0.0
+        var res = self.convertToAttrDict(i: ider)
+        for tup in res {
+            var rid = self.outkeysToId[tup.key]
+            if(validVals[rid!] > 0){
+                finresval += validVals[rid!] * tup.value
+            }
+        }
+        finresval *= 6.6
+        return finresval
+    }
+    
+    func packValidKeys() -> Array<String> {
+        var res = Array<String>();
+        for k in outkeys {
+            let ider = outkeysToId[k];
+            if(validVals[ider!] > 0){
+                res.append(k)
+            }
+        }
+        return res
+    }
+    
+
+    
+
     
     func readLastName() -> String {
         let defaults = UserDefaults.standard
@@ -65,13 +151,35 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         defaults.set(Name, forKey: "ICELASTNAME@")
         if(readDefaultsKey(K: Name)){
             self.collectionView.reloadData()
-            self.startAnalysis(self.changeCharactorbtn as Any)
         }
     }
     
     func swicthCurrentName(Name:String){
         self.currentName = Name
-        self.charactorLabel.text = self.currentName
+    }
+    
+    func saveToDefaultsKey(K:String){
+        let defaults = UserDefaults.standard
+        let mainContentsK = K + "?mainContents"
+        let mainValsK = K + "?mainVals"
+        let subContentsK = K + "?subContents"
+        let subValsK = K + "?subVals"
+        let validValsK = K + "?validVals"
+        
+        defaults.set(self.mainContents, forKey: mainContentsK)
+        defaults.set(self.mainVals, forKey: mainValsK)
+        defaults.set(self.subContents, forKey: subContentsK)
+        defaults.set(self.subVals, forKey: subValsK)
+        defaults.set(self.validVals, forKey: validValsK)
+    }
+    
+    func helpValidSave(K:String){
+        let defaults = UserDefaults.standard
+        let validValsK = K + "?validVals"
+        let item = defaults.object(forKey: validValsK)
+        if(item == nil){
+            defaults.set(self.validVals, forKey: validValsK)
+        }
     }
     
     func readDefaultsKey(K:String) -> Bool{
@@ -80,6 +188,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let mainValsK = K + "?mainVals"
         let subContentsK = K + "?subContents"
         let subValsK = K + "?subVals"
+        let validValsK = K + "?validVals"
         
         let item = defaults.object(forKey: mainContentsK)
         if(item == nil){
@@ -90,6 +199,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.mainVals = defaults.object(forKey: mainValsK) as? Array<Double>
         self.subContents = defaults.object(forKey: subContentsK) as? Array<Array<String>>
         self.subVals = defaults.object(forKey: subValsK) as? Array<Array<Double>>
+        self.validVals = defaults.object(forKey: validValsK) as? Array<Double>
         return true;
     }
     
@@ -109,7 +219,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             if(rm < 5 || rm == 9){
                 self.showAlert(value: "更改为");
             }
-        } else {
+        } else if(lastRecev >= 1000 && lastRecev < 1010){
+            let toggleid = lastRecev - 1000;
+            validVals[toggleid] *= -1;
+            self.collectionView.reloadData()
+        } else if(lastRecev > 10000) {
             let remainId = lastRecev % 100;
             let filteredVal = lastRecev - remainId;
             lastRecev = remainId;
@@ -117,8 +231,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             let innerId = remainId - blockId * 10 - 5;
             let trVal = Double(filteredVal) / 10000;
             subVals[blockId][innerId] = trVal;
-            self.saveNow()
         }
+        
+        self.saveNow()
     }
     
     func saveNow(){
@@ -139,87 +254,24 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.present(alertView, animated: true, completion: nil)
     }
     
-    @IBAction func changeCharactor(_ sender: Any) {
-        showCharactorPickWin()
-    }
-    
-    @IBAction func startAnalysis(_ sender: Any) {
-        outerResLabel.text = "评估中";
-        var outkeys = ["暴击","暴伤","攻击","充能","精通", "生命","防御"]
+    func startAnalysis() -> Dictionary<String,Double> {
         var res : Dictionary<String, Double>;
         res = Dictionary<String,Double>()
         for k in outkeys {
             res[k] = 0.0
         }
         for i in 0 ... 4 {
-            var score = 0.0
-            for j in 0 ... 3{
-                var wh = 0;
-                for p in 0 ... 9 {
-                    if(subVerb[p] == subContents[i][j]){
-                        wh = p;
-                        break;
-                    }
-                }
-                let counter = subVals[i][j] / midPerCount[wh];
-                switch(wh){
-                case 0 :
-                    res["暴击"]!+=counter;
-                    break
-                case 1 :
-                    res["暴伤"]!+=counter;
-                    break
-                    
-                case 2 :
-                    fallthrough
-                case 3 :
-                    res["攻击"]!+=counter;
-                    break
-                    
-                case 4 :
-                    res["精通"]!+=counter;
-                    break
-                    
-                case 5 :
-                    res["充能"]!+=counter;
-                    break
-                    
-                case 6 :
-                    fallthrough
-                case 7 :
-                    res["生命"]!+=counter;
-                    break
-                
-                case 8 :
-                    fallthrough
-                case 9 :
-                    res["防御"]!+=counter;
-                    break
-                
-                default:
-                    break
-                }
+            let tempDict = self.convertToAttrDict(i: i);
+            for item in tempDict {
+                res[item.key]! += item.value
             }
         }
-        var fin = "";
-        var counter = 0
-        var validCount = 0.0
-        for k in outkeys {
-            fin += k + " " + String(format: "%1.1f", res[k]!)
-            counter += 1
-            if(counter <= 3){
-                validCount += res[k]!
-            }
-            if counter % 2 == 0 {
-                fin += "\n"
-            } else {
-                fin += "    "
-            }
-        }
-        fin += String(format: "攻暴 %1.1f", validCount)
-        outerResLabel.text = fin
+        return res
     }
     
+    @IBAction func changeCharactor(_ sender: Any) {
+        showCharactorPickWin()
+    }
     func showAlert(value : String){
         let alertView = UIAlertController(title: "副词修改", message: value, preferredStyle: .actionSheet)
             alertView.addAction(UIAlertAction(title: "OK", style: .cancel) { _ in
@@ -243,11 +295,34 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.present(alertView, animated: true, completion: nil)
     }
     
+    @objc func tappedColorBtn(_ button:UIButton){
+        print(button.tag)
+        var toggleId = button.tag - 1000
+        validVals[toggleId] *= -1
+        if(validVals[toggleId] < 0){
+            button.backgroundColor = UIColor (named: "lightred")
+        } else {
+            button.backgroundColor = UIColor (named: "lightgreen")
+        }
+        self.collectionView.reloadData()
+    }
+    
+    func setupUI(){
+        if(self.validVals == nil){
+            validVals = Array<Double>(repeating: 1.0, count: 9)
+        }
+
+        self.outkeysToId = Dictionary<String,Int>()
+        for i in 0 ..< outkeys.endIndex {
+            self.outkeysToId[outkeys[i]] = i
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         var lastName = self.readLastName()
+
         swicthCurrentName(Name: lastName)
         
         if(!self.readDefaultsKey(K: currentName)){
@@ -257,8 +332,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             self.subContents = Array(repeating: Array(repeating: "大攻击", count: 4), count: 5);
         }
 
-        
+        setupUI()
+        for nam in charactorNames {
+            self.helpValidSave(K: nam)
+        }
         self.collectionView.register(IceCollectionCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView.register(ValidPickerCell.self, forCellWithReuseIdentifier: reusePickerIdentifier)
         registerNoti();
 
         // Do any additional setup after loading the view, typically from a nib.
@@ -291,7 +370,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 5
+        return 6
     }
     
     // custom function to generate a random UIColor

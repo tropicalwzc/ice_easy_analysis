@@ -28,12 +28,7 @@ class IceCollectionCell : UICollectionViewCell {
 
     }
     
-    /// 发送通知
-    func postNoti(btn : Int) -> Void {
-        let info = ["body":btn]
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "viewNotiSecond"), object: nil, userInfo: info )
-        print("begin post")
-    }
+
     
     @objc func tapped(_ button:UIButton){
         print(button.tag)
@@ -65,16 +60,16 @@ class IceCollectionCell : UICollectionViewCell {
         subContents = Array<UIButton>();
         subVals = Array<UITextField>();
         
-        self.imageView.frame = CGRect(x: 10.0, y: 50.0, width: 50, height: 50);
-        self.mainContent.frame = CGRect(x: 10.0, y: 0.0, width: 120, height: 50);
-        self.mainContent.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        self.imageView.frame = CGRect(x: 2.0, y: 20.0, width: 25, height: 25);
+        self.mainContent.frame = CGRect(x:27.0, y: 20.0, width: 125, height: 25);
+        self.mainContent.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.bold)
         self.mainContent.setTitleColor(UIColor.black, for: UIControl.State.normal)
-        self.mainContent.titleLabel?.font = UIFont.systemFont(ofSize: 13.0)
+        self.mainContent.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)
         self.mainContent.addTarget(self, action:#selector(tapped(_:)), for:.touchUpInside)
         
-        self.scoreLabel.frame = CGRect(x: 125.0, y: 0.0, width: 25, height: 25);
+        self.scoreLabel.frame = CGRect(x: 110, y: 0.0, width: 38, height: 15);
         self.scoreLabel.textColor =  UIColor(red: 0.972, green: 0.863, blue: 0.565, alpha: 1.0)
-        self.scoreLabel.backgroundColor = UIColor.lightGray
+        self.scoreLabel.backgroundColor = UIColor(red: 0.472, green: 0.463, blue: 0.425, alpha: 1.0)
         self.scoreLabel.font = UIFont.systemFont(ofSize: 18)
         
         self.addSubview(self.scoreLabel)
@@ -83,10 +78,10 @@ class IceCollectionCell : UICollectionViewCell {
         
         for i in 0...3 {
             let btn = UIButton()
-            btn.titleLabel?.font = UIFont.systemFont(ofSize: 10.0 ,weight: UIFont.Weight.bold)
+            btn.titleLabel?.font = UIFont.systemFont(ofSize: 16.0 ,weight: UIFont.Weight.bold)
 
-            let expectY = 50 + 22.0 * Double(i);
-            btn.frame = CGRect(x: 60, y: expectY, width: 45, height: 20.0);
+            let expectY = 50 + 25.0 * Double(i);
+            btn.frame = CGRect(x: 5, y: expectY, width: 70, height: 22.0);
             btn.backgroundColor = UIColor.white
             btn.setTitleColor(UIColor.black, for: UIControl.State.normal)
             btn.addTarget(self, action:#selector(tapped(_:)), for:.touchUpInside)
@@ -99,9 +94,9 @@ class IceCollectionCell : UICollectionViewCell {
         
         for i in 0...3 {
             let btn = UITextField()
-            btn.font = UIFont.systemFont(ofSize: 12.0)
-            let expectY = 50 + 22.0 * Double(i);
-            btn.frame = CGRect(x: 105, y: expectY, width: 45, height: 20.0);
+            btn.font = UIFont.systemFont(ofSize: 20.0, weight: UIFont.Weight.thin)
+            let expectY = 50 + 25.0 * Double(i);
+            btn.frame = CGRect(x: 80, y: expectY, width: 70, height: 22.0);
             btn.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.0)
             btn.textColor = UIColor.black
             btn.addTarget(self, action:#selector(valueChange(_:)), for:.editingDidEnd)
@@ -127,7 +122,16 @@ class IceCollectionCell : UICollectionViewCell {
         }
     }
     
-    func setImage(img : UIImage, ider : Int, mC:String, mV:Double, sC:Array<String>, sV:Array<Double>) {
+    func whetherValid(item : String, validKeys:Array<String>) -> Bool {
+        for va in validKeys {
+            if(item.contains(va)){
+                return true
+            }
+        }
+        return false
+    }
+    
+    func setImage(img : UIImage, ider : Int, mC:String, mV:Double, sC:Array<String>, sV:Array<Double>, estimate:Double, validKeys:Array<String>) {
 
             self.imageView.image = img;
             self.BaseId = ider * 10;
@@ -158,10 +162,10 @@ class IceCollectionCell : UICollectionViewCell {
         
             for i in 0...3 {
                 subContents[i].setTitle(sC[i], for: UIControl.State.normal)
-                if(sC[i].contains("防御") || sC[i].contains("生命")){
-                    subContents[i].setTitleColor(UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1.0), for: UIControl.State.normal)
-                } else {
+                if(self.whetherValid(item: sC[i], validKeys: validKeys)){
                     subContents[i].setTitleColor(UIColor.black, for: UIControl.State.normal)
+                } else {
+                    subContents[i].setTitleColor(UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1.0), for: UIControl.State.normal)
                 }
                 var str = String(sV[i])
                 if(!sC[i].contains("小") && !sC[i].contains("精通")){
@@ -171,7 +175,7 @@ class IceCollectionCell : UICollectionViewCell {
                 }
                 subVals[i].text = "+"+str;
             }
-        let score = String(25);
+        let score = String(format: "%1.1f", estimate);
         self.scoreLabel.text = score
     }
     

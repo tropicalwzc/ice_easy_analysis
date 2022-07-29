@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -18,24 +19,32 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rlO-D7-MBX">
-                                <rect key="frame" x="0.0" y="44" width="414" height="653"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="730"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="PNA-YB-69o">
-                                    <size key="itemSize" width="150" height="150"/>
-                                    <size key="estimatedItemSize" width="150" height="150"/>
+                                    <size key="itemSize" width="155" height="155"/>
+                                    <size key="estimatedItemSize" width="155" height="155"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CECell" id="vJu-TA-QLQ" customClass="IceCollectionCell" customModule="ice_analysis" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="155" height="155"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="uCI-Fl-1vq">
-                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="155" height="155"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="150" height="150"/>
+                                        <size key="customSize" width="155" height="155"/>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CEPickerCell" id="RFH-pn-fJC" customClass="ValidPickerCell" customModule="ice_analysis" customModuleProvider="target">
+                                        <rect key="frame" x="259" y="0.0" width="155" height="155"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="h9c-oR-RpL">
+                                            <rect key="frame" x="0.0" y="0.0" width="155" height="155"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -43,82 +52,51 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="z7t-mV-ddH"/>
                                 </connections>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2DZ-5M-rrI">
-                                <rect key="frame" x="0.0" y="705" width="414" height="104"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="104" id="wuZ-vj-tLv"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o2R-PU-p8B">
-                                <rect key="frame" x="337" y="644" width="77" height="53"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="77" id="7aI-Qw-xdg"/>
-                                    <constraint firstAttribute="height" constant="53" id="ROA-nc-9xM"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="评估">
-                                    <fontDescription key="titleFontDescription" type="system" weight="thin" pointSize="25"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="startAnalysis:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LFa-Z9-DQX"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rEm-oh-JcS">
-                                <rect key="frame" x="257" y="581" width="149" height="55"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="149" id="04T-HE-Ogp"/>
-                                    <constraint firstAttribute="height" constant="55" id="4jH-kY-Ue9"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="tinted" title="切换角色">
-                                    <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="changeCharactor:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AI7-Bl-0t8"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Apc-P9-Gqn">
-                                <rect key="frame" x="263" y="644" width="82" height="53"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="53" id="geb-Jt-9Ln"/>
-                                    <constraint firstAttribute="width" constant="82" id="kDz-jp-rJy"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4bh-Wh-xHF">
+                                <rect key="frame" x="0.0" y="818" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="切换人物" id="WdF-6X-fPM">
+                                        <connections>
+                                            <action selector="changeCharactor:" destination="BYZ-38-t0r" id="2eX-4j-Fxj"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="o2R-PU-p8B" firstAttribute="top" secondItem="rEm-oh-JcS" secondAttribute="bottom" constant="8" symbolic="YES" id="5XX-Cq-f4U"/>
-                            <constraint firstItem="2DZ-5M-rrI" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="7Q7-1w-h3Z"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="2DZ-5M-rrI" secondAttribute="bottom" constant="53" id="FQ7-BB-8pY"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="rlO-D7-MBX" secondAttribute="bottom" constant="165" id="GdO-Dq-Low"/>
-                            <constraint firstItem="Apc-P9-Gqn" firstAttribute="top" secondItem="rEm-oh-JcS" secondAttribute="bottom" constant="8" symbolic="YES" id="Lcd-ln-vpX"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="rlO-D7-MBX" secondAttribute="bottom" constant="44" id="GdO-Dq-Low"/>
                             <constraint firstItem="rlO-D7-MBX" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="RAO-S3-4wE"/>
-                            <constraint firstItem="2DZ-5M-rrI" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Rdg-ep-aEY"/>
-                            <constraint firstItem="2DZ-5M-rrI" firstAttribute="top" secondItem="o2R-PU-p8B" secondAttribute="bottom" constant="8" symbolic="YES" id="SIl-ml-mwO"/>
                             <constraint firstItem="rlO-D7-MBX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="g1x-P1-T8R"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="rEm-oh-JcS" secondAttribute="trailing" constant="8" id="gc5-bR-bOT"/>
                             <constraint firstItem="rlO-D7-MBX" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="mkm-df-aQF"/>
-                            <constraint firstItem="o2R-PU-p8B" firstAttribute="leading" secondItem="Apc-P9-Gqn" secondAttribute="trailing" constant="-8" id="qVO-CZ-Jyf"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="o2R-PU-p8B" secondAttribute="trailing" id="tdY-Br-ren"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="0i9-zb-ylM"/>
                     <connections>
-                        <outlet property="changeCharactorbtn" destination="rEm-oh-JcS" id="MC4-ZB-mp5"/>
-                        <outlet property="charactorLabel" destination="Apc-P9-Gqn" id="OlV-zt-wLk"/>
                         <outlet property="collectionView" destination="rlO-D7-MBX" id="Ksh-va-OKw"/>
-                        <outlet property="outerResLabel" destination="2DZ-5M-rrI" id="j0Z-Ar-iuE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="18.840579710144929" y="97.767857142857139"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="uKp-Fz-nbG">
+            <objects>
+                <navigationController id="Skf-bw-Iob" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="I7W-qq-EMT">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="uHC-Bs-gVD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="al2-U3-xUs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="19" y="-630"/>
         </scene>
     </scenes>
     <resources>
