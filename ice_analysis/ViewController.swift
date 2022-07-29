@@ -18,9 +18,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     let subVerb = ["暴击率","暴击伤害","大攻击","小攻击","元素精通","元素充能","大生命","小生命","大防御","小防御","治疗量","元素伤害","物理伤害"]
     let charactorNames = ["神里绫华","八重神子","刻晴","雷电将军","班尼特","枫原万叶","珊瑚宫心海","菲谢尔","甘雨","烟绯","迪卢克","罗莎莉亚","迪奥娜","莫娜","爷","七七","鹿野苑平藏","九条裟罗","钟离","胡桃","草神"]
-    let subVerbMaxVals = [31.1,62.2,46.6,311,187,51.8,46.6,4780,58.6,58.6,35.9,46.6,58.6]
-    let midPerCount = [3.3,6.6,5.0,50,20,5.5,5.0,600,6.2,43,100,100,100]
+    let subVerbMaxVals = [31.1,62.2,46.65,311,187,51.8,46.6,4780,58.6,58.6,35.9,46.6,58.6]
+    let midPerCount = [3.305,6.61,4.9575,50,20,5.5,5.0,600,6.2,43,100,100,100]
     
+    // 9.409984871406959
     private var mainContents:Array<String>!
     private var mainVals:Array<Double>!
     private var subContents:Array< Array<String>>!
@@ -269,6 +270,43 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return res
     }
     
+    func packingAllToOneDict() -> Dictionary<String,String> {
+        var finres = Dictionary<String,String>()
+        var res = Dictionary<String,Double>()
+        for k in subVerb {
+            res[k] = 0.0
+        }
+        for i in 0 ... 4 {
+            let maxval = mainVals[i]
+            let maxkey = mainContents[i]
+            res[maxkey]! += maxval
+            for j in 0 ... 3 {
+                res[subContents[i][j]]! += subVals[i][j]
+            }
+        }
+
+        for item in res {
+            let strVal = String(format:"%f",Double(item.value) )
+            finres[item.key] = strVal
+        }
+        return finres
+    }
+    
+    @IBAction func howMuchDamage(_ sender: Any) {
+        var rcDict = packingAllToOneDict()
+        print(rcDict)
+        var cc = CharactorBase()
+        cc.loadName(Name: "神里绫华")
+        cc.printCurrentPad()
+        cc.loadName(Name: "雾切")
+        cc.printCurrentPad()
+        cc.loadCurrentRelic(cDict: rcDict)
+        cc.printCurrentPad()
+        var edamage = cc.eDamage()
+        var qdamage = cc.qDamage()
+        print("E ",edamage)
+        print("Q ",qdamage)
+    }
     @IBAction func changeCharactor(_ sender: Any) {
         showCharactorPickWin()
     }

@@ -61,6 +61,11 @@
                                             <action selector="changeCharactor:" destination="BYZ-38-t0r" id="2eX-4j-Fxj"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="伤害评估" id="ENA-Uo-5Xg">
+                                        <connections>
+                                            <action selector="howMuchDamage:" destination="BYZ-38-t0r" id="buj-w0-dDn"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>

@@ -142,7 +142,7 @@ class IceCollectionCell : UICollectionViewCell {
             print("image set")
             
             firstInit = 0;
-            var mainStr = String(mV);
+            var mainStr = String(format: "%1.1f", mV);
             var mainName = mC
         
             if(mainName.contains("生命")){

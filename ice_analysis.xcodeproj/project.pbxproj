@@ -20,6 +20,7 @@
 		B44E595428924F7D00B47116 /* IceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44E595328924F7D00B47116 /* IceCollectionCell.swift */; };
 		B46601B92893BE4200860BB9 /* ValidPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46601B82893BE4200860BB9 /* ValidPickerCell.swift */; };
 		B46601BB2893C20600860BB9 /* globalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46601BA2893C20600860BB9 /* globalConstants.swift */; };
+		B46601C02893E5FB00860BB9 /* CharactorBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46601BF2893E5FB00860BB9 /* CharactorBase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		B44E595328924F7D00B47116 /* IceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IceCollectionCell.swift; sourceTree = "<group>"; };
 		B46601B82893BE4200860BB9 /* ValidPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidPickerCell.swift; sourceTree = "<group>"; };
 		B46601BA2893C20600860BB9 /* globalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalConstants.swift; sourceTree = "<group>"; };
+		B46601BF2893E5FB00860BB9 /* CharactorBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactorBase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 		B44E591F28923D5700B47116 /* ice_analysis */ = {
 			isa = PBXGroup;
 			children = (
+				B46601BE2893E5E800860BB9 /* charactors */,
 				B44E592028923D5700B47116 /* AppDelegate.swift */,
 				B46601BA2893C20600860BB9 /* globalConstants.swift */,
 				B44E592228923D5700B47116 /* SceneDelegate.swift */,
@@ -137,6 +140,14 @@
 				B44E594628923D5800B47116 /* ice_analysisUITestsLaunchTests.swift */,
 			);
 			path = ice_analysisUITests;
+			sourceTree = "<group>";
+		};
+		B46601BE2893E5E800860BB9 /* charactors */ = {
+			isa = PBXGroup;
+			children = (
+				B46601BF2893E5FB00860BB9 /* CharactorBase.swift */,
+			);
+			path = charactors;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,6 +281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B46601C02893E5FB00860BB9 /* CharactorBase.swift in Sources */,
 				B44E592528923D5700B47116 /* ViewController.swift in Sources */,
 				B44E592B28923D5700B47116 /* ice_analysis.xcdatamodeld in Sources */,
 				B46601B92893BE4200860BB9 /* ValidPickerCell.swift in Sources */,
