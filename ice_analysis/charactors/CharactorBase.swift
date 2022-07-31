@@ -196,6 +196,8 @@ class CharactorBase : NSObject {
                 hitPointRate += Double(item.value)!
                 break
             
+            case "元素充能":
+                fallthrough
             case "充能":
                 elementCharge += Double(item.value)!
                 break

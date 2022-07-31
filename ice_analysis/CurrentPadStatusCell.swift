@@ -13,6 +13,7 @@ class CurrentPadStatusCell : UICollectionViewCell {
     var validSubBtns:Array<UIButton>!
     var realFlushVals:Array<UILabel>!
     var totalScoreLabel:UILabel!
+    var isPersent:Array<Bool> = [true,true,false,true,false,false,false,true]
     
     override init(frame:CGRect){
         super.init(frame: frame)
@@ -28,8 +29,12 @@ class CurrentPadStatusCell : UICollectionViewCell {
     
     public func loadPadDatas(validVals : Array<Double>){
         for i in 0 ... 7 {
-            let orgName = outkeys[i]
-            var fulltitle = String(format: "%1.1f", validVals[i])
+            var fulltitle:String;
+            if(isPersent[i]){
+                fulltitle = String(format: "%1.1f%%", validVals[i])
+            } else {
+                fulltitle = String(format: "%1.0f", validVals[i])
+            }
             self.realFlushVals[i].text = fulltitle
         }
     }
