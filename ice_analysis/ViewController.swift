@@ -29,6 +29,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     private var currentName:String = "auto";
     var lastRecev : Int = 0;
     
+    var keyAnalysisResult :String = ""
+    var currentPadData:Array<Double>!
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if(indexPath.row < 5){
@@ -38,7 +41,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             cell.backgroundColor = self.randomColor()
             
             return cell
-        } else {
+        } else if(indexPath.row == 5){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusePickerIdentifier, for: indexPath as IndexPath) as! ValidPickerCell
             print(indexPath.row)
             var totalScoreNow = 0.0
@@ -49,6 +52,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             cell.flushPickColor(validVals: self.validVals, totalscore: totalScoreNow, detailCounts: detail)
             cell.backgroundColor = self.randomColor()
             
+            return cell
+        } else if(indexPath.row == 6){
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseCharactorIdentifier, for: indexPath as IndexPath) as! CharactorWeaponCell
+            print(indexPath.row)
+            cell.chooseCharactorWeapon(charactor: currentName, weapon: "雾切")
+            cell.displayKeyDamage(Content: keyAnalysisResult)
+            cell.backgroundColor = self.randomColor()
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseCurrentPadIdentifier, for: indexPath as IndexPath) as! CurrentPadStatusCell
+            print(indexPath.row)
+            cell.loadPadDatas(validVals: currentPadData)
+            cell.backgroundColor = self.randomColor()
             return cell
         }
         
@@ -224,6 +240,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             let toggleid = lastRecev - 1000;
             validVals[toggleid] *= -1;
             self.collectionView.reloadData()
+        } else if(lastRecev >= 2000 && lastRecev < 2100){
+            if(lastRecev == 2000){
+                showCharactorPickWin()
+            }
+            if(lastRecev == 2001){
+                keyAnalysisResult = howMuchDamage()
+                self.collectionView.reloadData()
+            }
+
         } else if(lastRecev > 10000) {
             let remainId = lastRecev % 100;
             let filteredVal = lastRecev - remainId;
@@ -292,20 +317,21 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return finres
     }
     
-    @IBAction func howMuchDamage(_ sender: Any) {
+    func howMuchDamage() -> String {
         var rcDict = packingAllToOneDict()
         print(rcDict)
         var cc = CharactorBase()
-        cc.loadName(Name: "神里绫华")
+        cc.loadCharactorName(Name: "神里绫华")
         cc.printCurrentPad()
-        cc.loadName(Name: "雾切")
+        cc.loadWeaponName(Name: "雾切")
         cc.printCurrentPad()
         cc.loadCurrentRelic(cDict: rcDict)
         cc.printCurrentPad()
         var edamage = cc.eDamage()
         var qdamage = cc.qDamage()
-        print("E ",edamage)
-        print("Q ",qdamage)
+        var res = String(format: "E %1.1f \nQ %1.1f ", edamage, qdamage)
+        self.currentPadData = cc.printCurrentPad()
+        return res
     }
     @IBAction func changeCharactor(_ sender: Any) {
         showCharactorPickWin()
@@ -360,7 +386,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         super.viewDidLoad()
         
         var lastName = self.readLastName()
-
+        self.currentPadData = Array(repeating: 0.0, count: 8)
+        print(lastName)
         swicthCurrentName(Name: lastName)
         
         if(!self.readDefaultsKey(K: currentName)){
@@ -376,6 +403,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
         self.collectionView.register(IceCollectionCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         self.collectionView.register(ValidPickerCell.self, forCellWithReuseIdentifier: reusePickerIdentifier)
+        self.collectionView.register(CharactorWeaponCell.self, forCellWithReuseIdentifier: reuseCharactorIdentifier)
+        self.collectionView.register(CurrentPadStatusCell.self, forCellWithReuseIdentifier: reuseCurrentPadIdentifier)
         registerNoti();
 
         // Do any additional setup after loading the view, typically from a nib.
@@ -408,7 +437,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 6
+        return 8
     }
     
     // custom function to generate a random UIColor

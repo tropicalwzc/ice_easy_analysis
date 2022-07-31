@@ -8,11 +8,12 @@
 import Foundation
 
 let nameOrdered = ["flower","feather","sand","cup","hat"]
-let outkeys = ["暴击","暴伤","攻击","充能","精通", "生命","防御"]
+let outkeys = ["暴击","暴伤","攻击","充能","精通", "生命","防御","增伤"]
 
 let reuseIdentifier = "CECell";
 let reusePickerIdentifier = "CEPickerCell";
-
+let reuseCharactorIdentifier = "CECharactorCell";
+let reuseCurrentPadIdentifier = "CECurrentPadCell"
 /// 发送通知
 func postNoti(btn : Int) -> Void {
     let info = ["body":btn]

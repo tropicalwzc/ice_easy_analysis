@@ -20,7 +20,7 @@ class CharactorBase : NSObject {
     public var critChance:Double = 5.0
     public var critDamage:Double = 50.0
     public var elementMastery:Double = 0.0
-    public var elementCharge:Double = 0.0
+    public var elementCharge:Double = 100.0
     //增伤区
     public var extraDamageRate:Double = 0.0
     
@@ -52,6 +52,9 @@ class CharactorBase : NSObject {
     
     public var eskillRate = 0.0
     public var qskillRate = 0.0
+    
+    var charactorBaseDict:Dictionary<String,Dictionary<String, String>>!
+    var weaponBaseDict:Dictionary<String,Dictionary<String, String>>!
     
     func CalculateRealDamage(skillRate:Double) -> Double {
         var reactionRate = 1.0
@@ -105,13 +108,15 @@ class CharactorBase : NSObject {
         self.hitPoint = round(self.hitPoint)
     }
     
-    func printCurrentPad(){
+    func printCurrentPad() -> Array<Double>{
+        let res = [self.critChance,self.critDamage,self.attack,elementCharge,self.elementMastery,self.hitPoint,self.defense,self.extraDamageRate]
         print(attack)
         print(hitPoint)
         print(defense)
         print(critDamage)
         print(critChance)
         print(extraDamageRate)
+        return res
     }
     
     func addingDictToPad(cDict : Dictionary<String, String>){
@@ -190,6 +195,10 @@ class CharactorBase : NSObject {
             case "生命百分比":
                 hitPointRate += Double(item.value)!
                 break
+            
+            case "充能":
+                elementCharge += Double(item.value)!
+                break
                 
             default:
                 break
@@ -197,15 +206,28 @@ class CharactorBase : NSObject {
         }
     }
     
-    func loadName(Name:String){
-        let mainBundle = Bundle.main
-        let identifer = mainBundle.bundleIdentifier
-        let info = mainBundle.infoDictionary
-        let cDict : Dictionary<String,String> = info?[Name] as! Dictionary<String, String>
+    func loadCharactorName(Name:String){
+        let cDict : Dictionary<String,String> = (charactorBaseDict?[Name])!
         self.addingDictToPad(cDict: cDict)
     }
     
-    func CharactorBase(Name:String) -> CharactorBase{
-        return self
+    func loadWeaponName(Name:String){
+        let cDict : Dictionary<String,String> = (weaponBaseDict?[Name])!
+        self.addingDictToPad(cDict: cDict)
+    }
+    
+    
+    override init(){
+        super.init()
+        print("Init now")
+        
+        let homeDir = NSHomeDirectory()
+        print(homeDir)
+        let mainBundle = Bundle.main
+        let identifer = mainBundle.bundleIdentifier
+        let info = mainBundle.infoDictionary
+
+        weaponBaseDict = info?["KnownWeapons"] as? Dictionary<String,Dictionary<String, String>>
+        charactorBaseDict = info?["KnownCharactors"] as? Dictionary<String,Dictionary<String, String>>
     }
 }
