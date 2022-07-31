@@ -109,19 +109,6 @@ class IceCollectionCell : UICollectionViewCell {
         }
     }
     
-    func reflush()
-    {
-        self.addSubview(self.scoreLabel)
-        self.addSubview(self.imageView)
-        self.addSubview(self.mainContent)
-        for i in 0 ... 3 {
-            self.addSubview(subContents[i])
-        }
-        for i in 0 ... 3 {
-            self.addSubview(subVals[i])
-        }
-    }
-    
     func whetherValid(item : String, validKeys:Array<String>) -> Bool {
         for va in validKeys {
             if(item.contains(va)){
@@ -142,7 +129,7 @@ class IceCollectionCell : UICollectionViewCell {
             print("image set")
             
             firstInit = 0;
-            var mainStr = String(mV);
+            var mainStr = String(format: "%1.1f", mV);
             var mainName = mC
         
             if(mainName.contains("生命")){

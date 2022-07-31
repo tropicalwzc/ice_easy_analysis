@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rlO-D7-MBX">
-                                <rect key="frame" x="0.0" y="88" width="414" height="730"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="PNA-YB-69o">
                                     <size key="itemSize" width="155" height="155"/>
@@ -46,31 +46,36 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionViewCellContentView>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CECharactorCell" id="lf4-60-JkU" customClass="CharactorWeaponCell" customModule="ice_analysis" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="165" width="155" height="155"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="jhy-ad-BKC">
+                                            <rect key="frame" x="0.0" y="0.0" width="155" height="155"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CECurrentPadCell" id="hdY-cA-cKI" customClass="CharactorWeaponCell" customModule="ice_analysis" customModuleProvider="target">
+                                        <rect key="frame" x="259" y="165" width="155" height="155"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="sf9-qF-aiB">
+                                            <rect key="frame" x="0.0" y="0.0" width="155" height="155"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="hpv-kw-C4W"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="z7t-mV-ddH"/>
                                 </connections>
                             </collectionView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4bh-Wh-xHF">
-                                <rect key="frame" x="0.0" y="818" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <barButtonItem title="切换人物" id="WdF-6X-fPM">
-                                        <connections>
-                                            <action selector="changeCharactor:" destination="BYZ-38-t0r" id="2eX-4j-Fxj"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="rlO-D7-MBX" secondAttribute="bottom" constant="44" id="GdO-Dq-Low"/>
-                            <constraint firstItem="rlO-D7-MBX" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="RAO-S3-4wE"/>
-                            <constraint firstItem="rlO-D7-MBX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="g1x-P1-T8R"/>
-                            <constraint firstItem="rlO-D7-MBX" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="mkm-df-aQF"/>
+                            <constraint firstItem="rlO-D7-MBX" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.863839" id="IC9-1q-oOD"/>
+                            <constraint firstItem="rlO-D7-MBX" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="NtP-3z-QrY"/>
+                            <constraint firstItem="rlO-D7-MBX" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="QYF-Oz-zlY"/>
+                            <constraint firstItem="rlO-D7-MBX" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Rvg-DH-V0c"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="0i9-zb-ylM"/>
