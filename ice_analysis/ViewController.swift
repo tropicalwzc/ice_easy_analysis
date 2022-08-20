@@ -16,7 +16,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var validVals:Array<Double>!
     var outkeysToId:Dictionary<String,Int>!
     
-    let subVerb = ["暴击率","暴击伤害","大攻击","小攻击","元素精通","元素充能","大生命","小生命","大防御","小防御","治疗量","元素伤害","物理伤害","生命值"]
+    let subVerb = ["暴击率","暴击伤害","大攻击","小攻击","元素精通","元素充能","大生命","小生命","大防御","小防御","治疗量","元素伤害","物理伤害","生命值", "破防", "减抗"]
     let charactorNames = ["神里绫华","八重神子","刻晴","雷电将军","班尼特","枫原万叶","珊瑚宫心海","菲谢尔","甘雨","烟绯","迪卢克","罗莎莉亚","迪奥娜","莫娜","爷","七七","鹿野苑平藏","九条裟罗","钟离","胡桃","草神"]
     
     let weaponNames = ["雾切","四风原典","破魔之弓","阿莫斯之弓","西风猎弓"]
@@ -31,6 +31,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     private var subVals:Array<Array<Double>>!
     private var currentName:String = "神里绫华";
     private var currentWeapon:String = "雾切"
+    
+    private var extraContents:Array<String>!
+    private var extraVals:Array<Double>!
+    
     var lastRecev : Int = 0;
     
     var keyAnalysisResult :String = ""
@@ -64,11 +68,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             cell.displayKeyDamage(Content: keyAnalysisResult)
             cell.backgroundColor = self.randomColor()
             return cell
-        } else {
+        } else if(indexPath.row == 7) {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseCurrentPadIdentifier, for: indexPath as IndexPath) as! CurrentPadStatusCell
             print(indexPath.row)
             cell.loadPadDatas(validVals: currentPadData)
             cell.backgroundColor = self.randomColor()
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! IceCollectionCell
+            print(indexPath.row)
+            cell.setImage(img: UIImage(imageLiteralResourceName: "autoweapon"), ider: indexPath.row, mC: "",mV: 0,sC: extraContents,sV: extraVals,estimate: 0, validKeys: self.packValidKeys())
+            cell.backgroundColor = self.randomColor()
+            cell.layer.cornerRadius = 10.0
             return cell
         }
         
@@ -190,6 +201,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let subValsK = K + "?subVals"
         let validValsK = K + "?validVals"
         let weaponK = K + "?weapon"
+        let extraContentsK = K + "?extraContents"
+        let extraValsK = K + "?extraVals"
         
         defaults.set(self.mainContents, forKey: mainContentsK)
         defaults.set(self.mainVals, forKey: mainValsK)
@@ -197,6 +210,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         defaults.set(self.subVals, forKey: subValsK)
         defaults.set(self.validVals, forKey: validValsK)
         defaults.set(self.currentWeapon, forKey: weaponK)
+        defaults.set(self.extraContents, forKey: extraContentsK)
+        defaults.set(self.extraVals, forKey: extraValsK)
     }
     
     func helpValidSave(K:String){
@@ -216,18 +231,22 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let subValsK = K + "?subVals"
         let validValsK = K + "?validVals"
         let weaponK = K + "?weapon"
+        let extraContentsK = K + "?extraContents"
+        let extraValsK = K + "?extraVals"
         
         let item = defaults.object(forKey: mainContentsK)
         if(item == nil){
             return false;
         }
         
-        self.mainContents = defaults.object(forKey: mainContentsK) as? Array<String>
-        self.mainVals = defaults.object(forKey: mainValsK) as? Array<Double>
-        self.subContents = defaults.object(forKey: subContentsK) as? Array<Array<String>>
-        self.subVals = defaults.object(forKey: subValsK) as? Array<Array<Double>>
-        self.validVals = defaults.object(forKey: validValsK) as? Array<Double>
-        self.currentWeapon = defaults.object(forKey: weaponK) as? String ?? "雾切"
+        self.mainContents = (defaults.object(forKey: mainContentsK) as! Array<String>)
+        self.mainVals = (defaults.object(forKey: mainValsK) as! Array<Double>)
+        self.subContents = (defaults.object(forKey: subContentsK) as! Array<Array<String>>)
+        self.subVals = (defaults.object(forKey: subValsK) as! Array<Array<Double>>)
+        self.validVals = (defaults.object(forKey: validValsK) as! Array<Double>)
+        self.currentWeapon = defaults.object(forKey: weaponK) as! String
+        self.extraContents = (defaults.object(forKey: extraContentsK) as! Array<String>)
+        self.extraVals = (defaults.object(forKey: extraValsK) as! Array<Double>)
         self.collectionView.reloadData()
         
         return true;
@@ -274,7 +293,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             let blockId = remainId / 10;
             let innerId = remainId - blockId * 10 - 5;
             let trVal = Double(filteredVal) / 10000;
-            subVals[blockId][innerId] = trVal;
+            if(blockId < 5){
+                subVals[blockId][innerId] = trVal;
+            } else {
+                extraVals[innerId] = trVal;
+                print("recev extra val at ",innerId)
+                print(trVal)
+            }
+
         }
         
         self.saveNow()
@@ -341,11 +367,21 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 res[subContents[i][j]]! += subVals[i][j]
             }
         }
+        
+        for i in 0 ... 9 {
+            if subVerb.contains(extraContents[i]) {
+                res[extraContents[i]]! += extraVals[i]
+                print("PKing")
+                print(extraContents[i])
+                print(extraVals[i])
+            }
+        }
 
         for item in res {
             let strVal = String(format:"%f",Double(item.value) )
             finres[item.key] = strVal
         }
+        print(finres)
         return finres
     }
     
@@ -379,12 +415,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 print("Pick ",self.subVerb[i])
                 let blockId = Int(self.lastRecev / 10);
                 let subId = self.lastRecev % 10;
-                if(subId == 9) {
-                    self.mainContents[blockId] = self.subVerb[i];
-                    self.mainVals[blockId] = self.subVerbMaxVals[i];
+                
+                if(blockId < 5){
+                    if(subId == 9) {
+                        self.mainContents[blockId] = self.subVerb[i];
+                        self.mainVals[blockId] = self.subVerbMaxVals[i];
+                    } else {
+                        self.subContents[blockId][subId] = self.subVerb[i];
+                    }
                 } else {
-                    self.subContents[blockId][subId] = self.subVerb[i];
+                    self.extraContents[subId] = self.subVerb[i];
                 }
+                
+
                 self.saveNow()
                 self.collectionView.reloadData();
             })
@@ -431,6 +474,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             self.mainContents = Array(repeating: "生命值", count: 5);
             self.subVals = Array(repeating: Array(repeating: 0.0, count: 4), count: 5);
             self.subContents = Array(repeating: Array(repeating: "大攻击", count: 4), count: 5);
+            self.extraVals = Array(repeating: 0.0, count: 10)
+            self.extraContents = Array(repeating: " ", count: 10)
         }
 
         setupUI()
@@ -478,7 +523,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 8
+        return 9
     }
     
     // custom function to generate a random UIColor
