@@ -36,14 +36,19 @@ class IceCollectionCell : UICollectionViewCell {
     }
 
     @objc func valueChange(_ field:UITextField){
-        if(field.text == ""){
-            field.text = "0"
+        
+        if let newval = field.text {
+            if(newval == ""){
+                field.text = "0"
+            }
+            let dVal = Double(newval)!
+            var biggerWrap = Int(dVal * 10000);
+            biggerWrap += field.tag
+            print(biggerWrap)
+            postNoti(btn: biggerWrap)
         }
-        var dVal = Double(field.text!)!
-        var biggerWrap = Int(dVal * 10000);
-        biggerWrap += field.tag
-        print(biggerWrap)
-        postNoti(btn: biggerWrap)
+        
+
     }
     
     @objc func valueClear(_ field:UITextField){
@@ -74,8 +79,8 @@ class IceCollectionCell : UICollectionViewCell {
         self.mainContent.addTarget(self, action:#selector(tapped(_:)), for:.touchUpInside)
         
         self.scoreLabel.frame = CGRect(x: cellper * 4.4, y: 0.0, width: cellper * 1.52, height: 0.6 * cellper);
-        self.scoreLabel.textColor =  UIColor(red: 0.972, green: 0.863, blue: 0.565, alpha: 1.0)
-        self.scoreLabel.backgroundColor = UIColor(red: 0.472, green: 0.463, blue: 0.425, alpha: 1.0)
+        self.scoreLabel.textColor =  UIColor(red: 0.872, green: 0.763, blue: 0.465, alpha: 1.0)
+        self.scoreLabel.backgroundColor = .clear
         self.scoreLabel.font = UIFont.systemFont(ofSize: 18)
         
         self.addSubview(self.scoreLabel)
@@ -160,7 +165,7 @@ class IceCollectionCell : UICollectionViewCell {
                 if(ider == 9){
                     self.mainContent.setTitle("吃拐情况", for: UIControl.State.normal)
                 } else {
-                    self.mainContent.setTitle("圣遗物额外加成", for: UIControl.State.normal)
+                    self.mainContent.setTitle("套装效果与命座", for: UIControl.State.normal)
                 }
 
             }
@@ -176,7 +181,7 @@ class IceCollectionCell : UICollectionViewCell {
                 var i = ai
                 var ci = ai + extraindex
                 subContents[i].setTitle(sC[ci], for: UIControl.State.normal)
-                if(self.whetherValid(item: sC[ci], validKeys: validKeys)){
+                if(self.whetherValid(item: sC[ci], validKeys: validKeys) || ider > 7 && !sC[ci].contains(" ")){
                     subContents[i].setTitleColor(UIColor.black, for: UIControl.State.normal)
                 } else {
                     subContents[i].setTitleColor(UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1.0), for: UIControl.State.normal)
@@ -187,7 +192,14 @@ class IceCollectionCell : UICollectionViewCell {
                 } else {
                     str = String(Int(sV[ci]))
                 }
-                subVals[i].text = "+"+str;
+                
+                if(sC[ci].contains(" ")){
+                    subVals[i].text = "";
+                } else {
+                    subVals[i].text = "+"+str;
+                }
+                
+
             }
         let score = String(format: "%1.1f", estimate);
         if(estimate < 1){

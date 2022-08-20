@@ -52,8 +52,6 @@
 	<dict>
 		<key>七七</key>
 		<dict>
-			<key>增伤</key>
-			<string>35</string>
 			<key>a</key>
 			<string>392</string>
 			<key>q</key>
@@ -69,8 +67,6 @@
 		</dict>
 		<key>九条裟罗</key>
 		<dict>
-			<key>增伤</key>
-			<string>35</string>
 			<key>a</key>
 			<string>392</string>
 			<key>q</key>
@@ -101,8 +97,6 @@
 		</dict>
 		<key>八重神子</key>
 		<dict>
-			<key>大攻击</key>
-			<string>36</string>
 			<key>e</key>
 			<string>213.1</string>
 			<key>q</key>
@@ -123,7 +117,7 @@
 			<key>q</key>
 			<string>239</string>
 			<key>增伤</key>
-			<string>33</string>
+			<string>18</string>
 			<key>攻击</key>
 			<string>342</string>
 			<key>暴伤</key>

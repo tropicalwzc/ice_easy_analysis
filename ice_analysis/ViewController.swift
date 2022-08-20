@@ -16,7 +16,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var validVals:Array<Double>!
     var outkeysToId:Dictionary<String,Int>!
     
-    let subVerb = ["暴击率","暴击伤害","大攻击","小攻击","元素精通","元素充能","大生命","小生命","大防御","小防御","治疗量","元素伤害","物理伤害","生命值", "破防", "减抗"]
+    let subVerb = ["暴击率","暴击伤害","大攻击","小攻击","元素精通","元素充能","大生命","小生命","大防御","小防御","治疗量","元素伤害","物理伤害","生命值", "破防", "减抗"," "]
     let charactorNames = ["神里绫华","八重神子","刻晴","雷电将军","班尼特","枫原万叶","珊瑚宫心海","菲谢尔","甘雨","烟绯","迪卢克","罗莎莉亚","迪奥娜","莫娜","爷","七七","鹿野苑平藏","九条裟罗","钟离","胡桃","草神"]
     
     let weaponNames = ["雾切","四风原典","破魔之弓","阿莫斯之弓","西风猎弓"]
@@ -77,7 +77,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! IceCollectionCell
             print(indexPath.row)
-            cell.setImage(img: UIImage(imageLiteralResourceName: "autoweapon"), ider: indexPath.row, mC: "",mV: 0,sC: extraContents,sV: extraVals,estimate: 0, validKeys: self.packValidKeys())
+            
+            cell.setImage(img: UIImage(imageLiteralResourceName: indexPath.row == 8 ? "star" : "good"), ider: indexPath.row, mC: "",mV: 0,sC: extraContents,sV: extraVals,estimate: 0, validKeys: self.packValidKeys())
             cell.backgroundColor = self.randomColor()
             cell.layer.cornerRadius = 10.0
             return cell
