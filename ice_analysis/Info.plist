@@ -4,6 +4,15 @@
 <dict>
 	<key>KnownWeapons</key>
 	<dict>
+		<key>四风原典</key>
+		<dict>
+			<key>暴击率</key>
+			<string>33.1</string>
+			<key>攻击</key>
+			<string>608</string>
+			<key>增伤</key>
+			<string>32</string>
+		</dict>
 		<key>雾切</key>
 		<dict>
 			<key>增伤</key>
@@ -16,6 +25,23 @@
 	</dict>
 	<key>KnownCharactors</key>
 	<dict>
+		<key>八重神子</key>
+		<dict>
+			<key>大攻击</key>
+			<string>36</string>
+			<key>e</key>
+			<string>213.1</string>
+			<key>q</key>
+			<string>601</string>
+			<key>攻击</key>
+			<string>340</string>
+			<key>暴击率</key>
+			<string>19.2</string>
+			<key>生命</key>
+			<string>10372</string>
+			<key>防御</key>
+			<string>569</string>
+		</dict>
 		<key>神里绫华</key>
 		<dict>
 			<key>e</key>

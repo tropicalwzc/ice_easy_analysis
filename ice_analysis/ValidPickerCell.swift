@@ -65,7 +65,7 @@ class ValidPickerCell : UICollectionViewCell {
             btn.backgroundColor = UIColor (named: "lightgreen")
             btn.setTitle(outkeys[i], for: UIControl.State.normal)
             btn.addTarget(self, action:#selector(tappedColorBtn(_:)), for:.touchUpInside)
-            btn.layer.cornerRadius = 12.0
+            btn.layer.cornerRadius = 8.0
             self.validSubBtns.append(btn)
         }
         for i in 0 ... 6 {

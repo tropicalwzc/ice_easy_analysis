@@ -27,6 +27,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     private var subContents:Array< Array<String>>!
     private var subVals:Array<Array<Double>>!
     private var currentName:String = "auto";
+    private var currentWeapon:String = "雾切"
     var lastRecev : Int = 0;
     
     var keyAnalysisResult :String = ""
@@ -149,10 +150,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return res
     }
     
-
-    
-
-    
     func readLastName() -> String {
         let defaults = UserDefaults.standard
         let lastName = defaults.object(forKey: "ICELASTNAME@");
@@ -162,6 +159,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         return lastName as! String
     }
+    
     func updateLastName(Name:String){
         let defaults = UserDefaults.standard
         self.swicthCurrentName(Name: Name)
@@ -321,15 +319,30 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         var rcDict = packingAllToOneDict()
         print(rcDict)
         var cc = CharactorBase()
-        cc.loadCharactorName(Name: "神里绫华")
-        cc.printCurrentPad()
-        cc.loadWeaponName(Name: "雾切")
-        cc.printCurrentPad()
-        cc.loadCurrentRelic(cDict: rcDict)
-        cc.printCurrentPad()
-        var edamage = cc.eDamage()
-        var qdamage = cc.qDamage()
-        var res = String(format: "E %1.1f \nQ %1.1f ", edamage, qdamage)
+        var res = ""
+        if(self.currentName == "八重神子"){
+            cc.loadCharactorName(Name: "八重神子")
+            cc.printCurrentPad()
+            cc.loadWeaponName(Name: "四风原典")
+            cc.printCurrentPad()
+            cc.loadCurrentRelic(cDict: rcDict)
+            cc.printCurrentPad()
+            var edamage = cc.eDamage()
+            var qdamage = cc.qDamage()
+            res = DamageCore.getCharactorKeyResultFromBase(base: cc, charactorName: "八重神子")
+        }
+        else {
+            cc.loadCharactorName(Name: "神里绫华")
+            cc.printCurrentPad()
+            cc.loadWeaponName(Name: "雾切")
+            cc.printCurrentPad()
+            cc.loadCurrentRelic(cDict: rcDict)
+            cc.printCurrentPad()
+            var edamage = cc.eDamage()
+            var qdamage = cc.qDamage()
+            res = DamageCore.getCharactorKeyResultFromBase(base: cc, charactorName: "神里绫华")
+        }
+
         self.currentPadData = cc.printCurrentPad()
         return res
     }

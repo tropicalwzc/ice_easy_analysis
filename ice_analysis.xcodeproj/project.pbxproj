@@ -24,6 +24,7 @@
 		B46601C4289669CF00860BB9 /* CharactorWeaponCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46601C3289669CF00860BB9 /* CharactorWeaponCell.swift */; };
 		B46601C62896819100860BB9 /* CurrentPadStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46601C52896819100860BB9 /* CurrentPadStatusCell.swift */; };
 		B46602FD28B0BC0A00860BB9 /* ScreenUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46602FC28B0BC0A00860BB9 /* ScreenUtils.swift */; };
+		B466030028B0CB3F00860BB9 /* DamageCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46602FF28B0CB3F00860BB9 /* DamageCore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		B46601C3289669CF00860BB9 /* CharactorWeaponCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactorWeaponCell.swift; sourceTree = "<group>"; };
 		B46601C52896819100860BB9 /* CurrentPadStatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPadStatusCell.swift; sourceTree = "<group>"; };
 		B46602FC28B0BC0A00860BB9 /* ScreenUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenUtils.swift; sourceTree = "<group>"; };
+		B46602FF28B0CB3F00860BB9 /* DamageCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageCore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 		B44E591F28923D5700B47116 /* ice_analysis */ = {
 			isa = PBXGroup;
 			children = (
+				B46602FE28B0CB2C00860BB9 /* DamageCore */,
 				B46602FB28B0BBF000860BB9 /* Utils */,
 				B46601BE2893E5E800860BB9 /* charactors */,
 				B44E592028923D5700B47116 /* AppDelegate.swift */,
@@ -165,6 +168,14 @@
 				B46602FC28B0BC0A00860BB9 /* ScreenUtils.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		B46602FE28B0CB2C00860BB9 /* DamageCore */ = {
+			isa = PBXGroup;
+			children = (
+				B46602FF28B0CB3F00860BB9 /* DamageCore.swift */,
+			);
+			path = DamageCore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,6 +320,7 @@
 				B46601C62896819100860BB9 /* CurrentPadStatusCell.swift in Sources */,
 				B44E592128923D5700B47116 /* AppDelegate.swift in Sources */,
 				B44E592328923D5700B47116 /* SceneDelegate.swift in Sources */,
+				B466030028B0CB3F00860BB9 /* DamageCore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
