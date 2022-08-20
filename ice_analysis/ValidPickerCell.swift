@@ -12,6 +12,7 @@ class ValidPickerCell : UICollectionViewCell {
     
     var validSubBtns:Array<UIButton>!
     var totalScoreLabel:UILabel!
+    var analysisBtn:UIButton!
     
     override init(frame:CGRect){
         super.init(frame: frame)
@@ -28,6 +29,10 @@ class ValidPickerCell : UICollectionViewCell {
         postNoti(btn: button.tag)
     }
     
+    @objc func tappedAnalysisBtn(_ button:UIButton){
+        print(button.tag)
+        postNoti(btn: button.tag)
+    }
     
     public func flushPickColor(validVals : Array<Double>, totalscore : Double, detailCounts:Dictionary<String,Double>){
         for i in 0 ... 6 {
@@ -56,7 +61,7 @@ class ValidPickerCell : UICollectionViewCell {
         for i in 0 ... 6 {
             
             let x = Double(i % 2) * perwidth
-            let y = Double(i / 2) * 26 + 26
+            let y = Double(i / 2 + 1) * (cellper * 1.04)
             let btn = UIButton()
             
             btn.frame = CGRect(x: x, y: y, width: perwidth - 2, height: 24)
@@ -73,9 +78,18 @@ class ValidPickerCell : UICollectionViewCell {
         }
         
         totalScoreLabel = UILabel()
-        totalScoreLabel.frame = CGRect(x: 0, y: 0, width: perwidth * 2, height: 24)
+        totalScoreLabel.frame = CGRect(x: 0, y: 0, width: perwidth * 2, height: cellper * 0.96)
         totalScoreLabel.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.bold)
         totalScoreLabel.textColor = UIColor.black
+        
+        analysisBtn = UIButton()
+        analysisBtn.frame = CGRect(x: perwidth * 0.4, y: 5.2 * cellper, width: perwidth * 1.5, height: cellper * 0.96)
+        analysisBtn.tag = 2002
+        analysisBtn.setTitle("伤害评估", for: UIControl.State.normal)
+        analysisBtn.addTarget(self, action:#selector(tappedAnalysisBtn(_:)), for:.touchUpInside)
+        analysisBtn.backgroundColor = UIColor.gray
+        analysisBtn.layer.cornerRadius = 10.0
         self.addSubview(totalScoreLabel)
+        self.addSubview(analysisBtn)
     }
 }

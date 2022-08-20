@@ -4,6 +4,31 @@
 <dict>
 	<key>KnownWeapons</key>
 	<dict>
+		<key>西风猎弓</key>
+		<dict>
+			<key>元素充能</key>
+			<string>61.3</string>
+			<key>攻击</key>
+			<string>454</string>
+		</dict>
+		<key>阿莫斯之弓</key>
+		<dict>
+			<key>大攻击</key>
+			<string>49.6</string>
+			<key>攻击</key>
+			<string>608</string>
+			<key>增伤</key>
+			<string>52</string>
+		</dict>
+		<key>破魔之弓</key>
+		<dict>
+			<key>大攻击</key>
+			<string>55.1</string>
+			<key>攻击</key>
+			<string>454</string>
+			<key>增伤</key>
+			<string>48</string>
+		</dict>
 		<key>四风原典</key>
 		<dict>
 			<key>暴击率</key>
@@ -25,6 +50,55 @@
 	</dict>
 	<key>KnownCharactors</key>
 	<dict>
+		<key>七七</key>
+		<dict>
+			<key>增伤</key>
+			<string>35</string>
+			<key>a</key>
+			<string>392</string>
+			<key>q</key>
+			<string>126</string>
+			<key>攻击</key>
+			<string>335</string>
+			<key>暴伤</key>
+			<string>38.4</string>
+			<key>生命</key>
+			<string>9797</string>
+			<key>防御</key>
+			<string>630</string>
+		</dict>
+		<key>九条裟罗</key>
+		<dict>
+			<key>增伤</key>
+			<string>35</string>
+			<key>a</key>
+			<string>392</string>
+			<key>q</key>
+			<string>126</string>
+			<key>攻击</key>
+			<string>335</string>
+			<key>暴伤</key>
+			<string>38.4</string>
+			<key>生命</key>
+			<string>9797</string>
+			<key>防御</key>
+			<string>630</string>
+		</dict>
+		<key>甘雨</key>
+		<dict>
+			<key>a</key>
+			<string>392</string>
+			<key>q</key>
+			<string>126</string>
+			<key>攻击</key>
+			<string>335</string>
+			<key>暴伤</key>
+			<string>38.4</string>
+			<key>生命</key>
+			<string>9797</string>
+			<key>防御</key>
+			<string>630</string>
+		</dict>
 		<key>八重神子</key>
 		<dict>
 			<key>大攻击</key>

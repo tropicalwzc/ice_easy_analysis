@@ -52,14 +52,22 @@ class CharactorBase : NSObject {
     
     public var eskillRate = 0.0
     public var qskillRate = 0.0
+    public var askillRate = 0.0
+    
+    
+    //申鹤类似拐的方式给予的额外值
+    public var externalAtkAreaVal = 0.0
     
     var charactorBaseDict:Dictionary<String,Dictionary<String, String>>!
     var weaponBaseDict:Dictionary<String,Dictionary<String, String>>!
     
     func CalculateRealDamage(skillRate:Double) -> Double {
         var reactionRate = 1.0
-        if(element.contains("火")){
-            reactionRate = 1.5 * (extraElementMasteryRate + (2.78 * elementMastery) / (elementMastery + 1400))
+        if(element.contains("火打水") || element.contains("冰打火")){
+            reactionRate = 1.5 * (1.0 + (extraElementMasteryRate + (2.78 * elementMastery) / (elementMastery + 1400)) )
+            print("reactionrate is ",reactionRate)
+        } else if(element.contains("水打火") || element.contains("火打冰")){
+            reactionRate = 2.0 * (1.0 + (extraElementMasteryRate + (2.78 * elementMastery) / (elementMastery + 1400)) )
         }
         print(attack)
         print(extraDamageRate)
@@ -67,10 +75,13 @@ class CharactorBase : NSObject {
         print(defenseReduce)
         print(skillRate / 100.0)
         
-        let res = attack * (skillRate / 100.0) * (1.0 + extraDamageRate / 100.0) * (1.0 + critDamage / 100.0) * reactionRate * defenseReduce * elementReduce
+        let res = (attack * (skillRate / 100.0) + externalAtkAreaVal ) * (1.0 + extraDamageRate / 100.0) * (1.0 + critDamage / 100.0) * reactionRate * defenseReduce * elementReduce
         return res
     }
     
+    func aDamage() -> Double {
+        return CalculateRealDamage(skillRate: askillRate)
+    }
     func eDamage() -> Double {
         return CalculateRealDamage(skillRate: eskillRate)
     }
@@ -146,6 +157,9 @@ class CharactorBase : NSObject {
             case "e":
                 eskillRate += Double(item.value)!
                 break
+            case "a":
+                askillRate += Double(item.value)!
+                break
             case "q":
                 qskillRate += Double(item.value)!
                 break
@@ -209,13 +223,15 @@ class CharactorBase : NSObject {
     }
     
     func loadCharactorName(Name:String){
-        let cDict : Dictionary<String,String> = (charactorBaseDict?[Name])!
-        self.addingDictToPad(cDict: cDict)
+        if let cDict : Dictionary<String,String> = (charactorBaseDict?[Name]) {
+            self.addingDictToPad(cDict: cDict)
+        }
     }
     
     func loadWeaponName(Name:String){
-        let cDict : Dictionary<String,String> = (weaponBaseDict?[Name])!
-        self.addingDictToPad(cDict: cDict)
+        if let cDict : Dictionary<String,String> = (weaponBaseDict?[Name]) {
+            self.addingDictToPad(cDict: cDict)
+        }
     }
     
     

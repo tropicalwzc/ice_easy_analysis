@@ -18,6 +18,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     let subVerb = ["暴击率","暴击伤害","大攻击","小攻击","元素精通","元素充能","大生命","小生命","大防御","小防御","治疗量","元素伤害","物理伤害"]
     let charactorNames = ["神里绫华","八重神子","刻晴","雷电将军","班尼特","枫原万叶","珊瑚宫心海","菲谢尔","甘雨","烟绯","迪卢克","罗莎莉亚","迪奥娜","莫娜","爷","七七","鹿野苑平藏","九条裟罗","钟离","胡桃","草神"]
+    
+    let weaponNames = ["雾切","四风原典","破魔之弓","阿莫斯之弓","西风猎弓"]
+    
     let subVerbMaxVals = [31.1,62.2,46.65,311,187,51.8,46.6,4780,58.6,58.6,35.9,46.6,58.6]
     let midPerCount = [3.305,6.61,4.9575,50,20,5.5,5.0,600,6.2,43,100,100,100]
     
@@ -57,7 +60,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         } else if(indexPath.row == 6){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseCharactorIdentifier, for: indexPath as IndexPath) as! CharactorWeaponCell
             print(indexPath.row)
-            cell.chooseCharactorWeapon(charactor: currentName, weapon: "雾切")
+            cell.chooseCharactorWeapon(charactor: currentName, weapon: currentWeapon)
             cell.displayKeyDamage(Content: keyAnalysisResult)
             cell.backgroundColor = self.randomColor()
             return cell
@@ -169,6 +172,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
+    func updateLastWeapon(Name:String){
+        self.currentWeapon = Name
+        keyAnalysisResult = howMuchDamage()
+        self.collectionView.reloadData()
+    }
+    
+    
     func swicthCurrentName(Name:String){
         self.currentName = Name
     }
@@ -180,12 +190,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let subContentsK = K + "?subContents"
         let subValsK = K + "?subVals"
         let validValsK = K + "?validVals"
+        let weaponK = K + "?weapon"
         
         defaults.set(self.mainContents, forKey: mainContentsK)
         defaults.set(self.mainVals, forKey: mainValsK)
         defaults.set(self.subContents, forKey: subContentsK)
         defaults.set(self.subVals, forKey: subValsK)
         defaults.set(self.validVals, forKey: validValsK)
+        defaults.set(self.currentWeapon, forKey: weaponK)
     }
     
     func helpValidSave(K:String){
@@ -204,6 +216,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let subContentsK = K + "?subContents"
         let subValsK = K + "?subVals"
         let validValsK = K + "?validVals"
+        let weaponK = K + "?weapon"
         
         let item = defaults.object(forKey: mainContentsK)
         if(item == nil){
@@ -215,6 +228,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.subContents = defaults.object(forKey: subContentsK) as? Array<Array<String>>
         self.subVals = defaults.object(forKey: subValsK) as? Array<Array<Double>>
         self.validVals = defaults.object(forKey: validValsK) as? Array<Double>
+        self.currentWeapon = defaults.object(forKey: weaponK) as? String ?? "雾切"
+        
+        keyAnalysisResult = howMuchDamage()
+        self.collectionView.reloadData()
+        
         return true;
     }
     
@@ -243,6 +261,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 showCharactorPickWin()
             }
             if(lastRecev == 2001){
+                showWeaponPickWin()
+//                keyAnalysisResult = howMuchDamage()
+//                self.collectionView.reloadData()
+            }
+            if(lastRecev == 2002){
                 keyAnalysisResult = howMuchDamage()
                 self.collectionView.reloadData()
             }
@@ -273,6 +296,20 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             alertView.addAction(UIAlertAction(title: charactorNames[i], style: .default) { [self] _ in
                 print("Pick ",self.charactorNames[i])
                 self.updateLastName(Name: self.charactorNames[i]);
+            })
+        }
+        self.present(alertView, animated: true, completion: nil)
+    }
+    
+    func showWeaponPickWin(){
+        let alertView = UIAlertController(title: "选择武器", message: "", preferredStyle: .actionSheet)
+        alertView.addAction(UIAlertAction(title: "OK", style: .cancel) { _ in
+        })
+        
+        for i in 0 ..< weaponNames.endIndex {
+            alertView.addAction(UIAlertAction(title: weaponNames[i], style: .default) { [self] _ in
+                print("Pick ",self.weaponNames[i])
+                self.updateLastWeapon(Name: self.weaponNames[i]);
             })
         }
         self.present(alertView, animated: true, completion: nil)
@@ -320,29 +357,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         print(rcDict)
         var cc = CharactorBase()
         var res = ""
-        if(self.currentName == "八重神子"){
-            cc.loadCharactorName(Name: "八重神子")
-            cc.printCurrentPad()
-            cc.loadWeaponName(Name: "四风原典")
-            cc.printCurrentPad()
-            cc.loadCurrentRelic(cDict: rcDict)
-            cc.printCurrentPad()
-            var edamage = cc.eDamage()
-            var qdamage = cc.qDamage()
-            res = DamageCore.getCharactorKeyResultFromBase(base: cc, charactorName: "八重神子")
-        }
-        else {
-            cc.loadCharactorName(Name: "神里绫华")
-            cc.printCurrentPad()
-            cc.loadWeaponName(Name: "雾切")
-            cc.printCurrentPad()
-            cc.loadCurrentRelic(cDict: rcDict)
-            cc.printCurrentPad()
-            var edamage = cc.eDamage()
-            var qdamage = cc.qDamage()
-            res = DamageCore.getCharactorKeyResultFromBase(base: cc, charactorName: "神里绫华")
-        }
-
+        
+        var loadName = self.currentName
+        var loadWeapon = self.currentWeapon
+        
+        cc.loadCharactorName(Name: loadName)
+        cc.loadWeaponName(Name: loadWeapon)
+        cc.loadCurrentRelic(cDict: rcDict)
+        res = DamageCore.getCharactorKeyResultFromBase(base: cc, charactorName: loadName)
+    
         self.currentPadData = cc.printCurrentPad()
         return res
     }

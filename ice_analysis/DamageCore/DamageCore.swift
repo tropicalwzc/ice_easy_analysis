@@ -19,6 +19,15 @@ struct DamageCore {
 
             res = String(format: "E %1.1f \nQ %1.1f ", edamage, qdamage)
             break
+        
+        case "甘雨","九条裟罗","七七":
+            var qdamage = cc.qDamage()
+            var adamageWithOutFire = cc.aDamage()
+            cc.element = "冰打火"
+            var adamageWithFire = cc.aDamage()
+            res = String(format: "纯冰重击 %1.1f \n融化重击 %1.1f \nQ %1.1f ", adamageWithOutFire, adamageWithFire, qdamage)
+            break
+            
         case "神里绫华":
             var qdamage = cc.qDamage()
             var edamage = cc.eDamage()

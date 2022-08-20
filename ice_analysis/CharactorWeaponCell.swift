@@ -79,7 +79,10 @@ class CharactorWeaponCell : UICollectionViewCell {
     
     func setupUI() {
         
-        let perwidth = 77.0
+        let smallsidelen = ScreenUtils.getScreenSmallSideLength()
+        let cellper = smallsidelen * 0.08
+        let perwidth = 3.08 * cellper
+        
         for i in 0 ... 1 {
             
             let x = Double(i % 2) * perwidth
@@ -102,9 +105,10 @@ class CharactorWeaponCell : UICollectionViewCell {
         
         self.keyDamageResult = UILabel()
         self.keyDamageResult.frame = CGRect(x: 5, y: 77, width: perwidth * 2 - 5, height: 45)
-        self.keyDamageResult.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.heavy)
+        self.keyDamageResult.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.heavy)
         self.keyDamageResult.textColor = UIColor.black
-        self.keyDamageResult.numberOfLines = 2
+        self.keyDamageResult.numberOfLines = 3
+        self.keyDamageResult.minimumScaleFactor = 0.1
         self.addSubview(self.keyDamageResult)
     }
 }
