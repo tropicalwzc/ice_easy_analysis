@@ -39,7 +39,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             print(indexPath.row)
             cell.setImage(img: UIImage(imageLiteralResourceName: nameOrdered[indexPath.row]), ider: indexPath.row, mC: mainContents[indexPath.row],mV: mainVals[indexPath.row],sC: subContents[indexPath.row],sV: subVals[indexPath.row],estimate: self.scoreEstimate(ider: indexPath.row), validKeys: self.packValidKeys())
             cell.backgroundColor = self.randomColor()
-            
+            cell.layer.cornerRadius = 10.0
             return cell
         } else if(indexPath.row == 5){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusePickerIdentifier, for: indexPath as IndexPath) as! ValidPickerCell
@@ -420,7 +420,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat
     {
         
-        return 4;
+        return 6;
     }
     internal func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
     {
@@ -428,6 +428,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return 1;
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let smallone = ScreenUtils.getScreenSmallSideLength()
+        let real = smallone / 2.0 - 3
+        return CGSize(width: real, height: real)
+    }
     
     //UICollectionViewDatasource methods
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {

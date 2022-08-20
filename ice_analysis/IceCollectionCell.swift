@@ -60,14 +60,20 @@ class IceCollectionCell : UICollectionViewCell {
         subContents = Array<UIButton>();
         subVals = Array<UITextField>();
         
-        self.imageView.frame = CGRect(x: 2.0, y: 20.0, width: 25, height: 25);
-        self.mainContent.frame = CGRect(x:27.0, y: 20.0, width: 125, height: 25);
+        let smallsidelen = ScreenUtils.getScreenSmallSideLength()
+        let cellper = smallsidelen * 0.08
+        // 25 = cellper in 12mini scale mode
+        
+        self.imageView.frame = CGRect(x: cellper * 0.08, y: cellper * 0.8, width: cellper, height: cellper);
+        self.imageView.layer.cornerRadius = 10.0
+        
+        self.mainContent.frame = CGRect(x:cellper * 1.08, y: cellper * 0.8, width: cellper * 5, height: cellper);
         self.mainContent.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.bold)
         self.mainContent.setTitleColor(UIColor.black, for: UIControl.State.normal)
         self.mainContent.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)
         self.mainContent.addTarget(self, action:#selector(tapped(_:)), for:.touchUpInside)
         
-        self.scoreLabel.frame = CGRect(x: 110, y: 0.0, width: 38, height: 15);
+        self.scoreLabel.frame = CGRect(x: cellper * 4.4, y: 0.0, width: cellper * 1.52, height: 0.6 * cellper);
         self.scoreLabel.textColor =  UIColor(red: 0.972, green: 0.863, blue: 0.565, alpha: 1.0)
         self.scoreLabel.backgroundColor = UIColor(red: 0.472, green: 0.463, blue: 0.425, alpha: 1.0)
         self.scoreLabel.font = UIFont.systemFont(ofSize: 18)
@@ -80,11 +86,12 @@ class IceCollectionCell : UICollectionViewCell {
             let btn = UIButton()
             btn.titleLabel?.font = UIFont.systemFont(ofSize: 16.0 ,weight: UIFont.Weight.bold)
 
-            let expectY = 50 + 25.0 * Double(i);
-            btn.frame = CGRect(x: 5, y: expectY, width: 70, height: 22.0);
+            let expectY = cellper * 2 + cellper * Double(i);
+            btn.frame = CGRect(x: cellper * 0.2, y: expectY, width: cellper * 2.8, height: cellper * 0.88);
             btn.backgroundColor = UIColor.white
             btn.setTitleColor(UIColor.black, for: UIControl.State.normal)
             btn.addTarget(self, action:#selector(tapped(_:)), for:.touchUpInside)
+            btn.layer.cornerRadius = 6.0
             subContents.append(btn);
         }
         for i in 0 ... 3 {
@@ -95,13 +102,14 @@ class IceCollectionCell : UICollectionViewCell {
         for i in 0...3 {
             let btn = UITextField()
             btn.font = UIFont.systemFont(ofSize: 20.0, weight: UIFont.Weight.thin)
-            let expectY = 50 + 25.0 * Double(i);
-            btn.frame = CGRect(x: 80, y: expectY, width: 70, height: 22.0);
+            let expectY = cellper * 2 + cellper * Double(i);
+            btn.frame = CGRect(x: cellper * 3.2, y: expectY, width: cellper * 2.8, height: cellper * 0.88);
             btn.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.0)
             btn.textColor = UIColor.black
             btn.addTarget(self, action:#selector(valueChange(_:)), for:.editingDidEnd)
             btn.addTarget(self, action:#selector(valueClear(_:)), for:.editingDidBegin)
             btn.keyboardType = UIKeyboardType.numbersAndPunctuation
+            btn.layer.cornerRadius = 6.0
             subVals.append(btn);
         }
         for i in 0 ... 3 {

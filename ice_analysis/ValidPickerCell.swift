@@ -48,7 +48,11 @@ class ValidPickerCell : UICollectionViewCell {
     func setupUI() {
         
         self.validSubBtns = Array<UIButton>()
-        let perwidth = 77.0
+        
+        let smallsidelen = ScreenUtils.getScreenSmallSideLength()
+        let cellper = smallsidelen * 0.08
+        
+        let perwidth = 3.08 * cellper
         for i in 0 ... 6 {
             
             let x = Double(i % 2) * perwidth
@@ -61,6 +65,7 @@ class ValidPickerCell : UICollectionViewCell {
             btn.backgroundColor = UIColor (named: "lightgreen")
             btn.setTitle(outkeys[i], for: UIControl.State.normal)
             btn.addTarget(self, action:#selector(tappedColorBtn(_:)), for:.touchUpInside)
+            btn.layer.cornerRadius = 12.0
             self.validSubBtns.append(btn)
         }
         for i in 0 ... 6 {
