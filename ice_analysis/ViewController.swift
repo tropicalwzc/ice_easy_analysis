@@ -16,20 +16,20 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var validVals:Array<Double>!
     var outkeysToId:Dictionary<String,Int>!
     
-    let subVerb = ["暴击率","暴击伤害","大攻击","小攻击","元素精通","元素充能","大生命","小生命","大防御","小防御","治疗量","元素伤害","物理伤害"]
+    let subVerb = ["暴击率","暴击伤害","大攻击","小攻击","元素精通","元素充能","大生命","小生命","大防御","小防御","治疗量","元素伤害","物理伤害","生命值"]
     let charactorNames = ["神里绫华","八重神子","刻晴","雷电将军","班尼特","枫原万叶","珊瑚宫心海","菲谢尔","甘雨","烟绯","迪卢克","罗莎莉亚","迪奥娜","莫娜","爷","七七","鹿野苑平藏","九条裟罗","钟离","胡桃","草神"]
     
     let weaponNames = ["雾切","四风原典","破魔之弓","阿莫斯之弓","西风猎弓"]
     
-    let subVerbMaxVals = [31.1,62.2,46.65,311,187,51.8,46.6,4780,58.6,58.6,35.9,46.6,58.6]
-    let midPerCount = [3.305,6.61,4.9575,50,20,5.5,5.0,600,6.2,43,100,100,100]
+    let subVerbMaxVals = [31.1,62.2,46.65,311,187,51.8,46.6,4780,58.6,58.6,35.9,46.6,58.6, 4780]
+    let midPerCount = [3.305,6.61,4.9575,50,20,5.5,5.0,600,6.2,43,100,100,100, 600]
     
     // 9.409984871406959
     private var mainContents:Array<String>!
     private var mainVals:Array<Double>!
     private var subContents:Array< Array<String>>!
     private var subVals:Array<Array<Double>>!
-    private var currentName:String = "auto";
+    private var currentName:String = "神里绫华";
     private var currentWeapon:String = "雾切"
     var lastRecev : Int = 0;
     
@@ -174,7 +174,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func updateLastWeapon(Name:String){
         self.currentWeapon = Name
-        keyAnalysisResult = howMuchDamage()
         self.collectionView.reloadData()
     }
     
@@ -229,8 +228,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.subVals = defaults.object(forKey: subValsK) as? Array<Array<Double>>
         self.validVals = defaults.object(forKey: validValsK) as? Array<Double>
         self.currentWeapon = defaults.object(forKey: weaponK) as? String ?? "雾切"
-        
-        keyAnalysisResult = howMuchDamage()
         self.collectionView.reloadData()
         
         return true;
@@ -424,7 +421,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         var lastName = self.readLastName()
         self.currentPadData = Array(repeating: 0.0, count: 8)
         print(lastName)
-        swicthCurrentName(Name: lastName)
+        if(lastName != "auto"){
+            swicthCurrentName(Name: lastName)
+        }
+
         
         if(!self.readDefaultsKey(K: currentName)){
             self.mainVals = Array(repeating: 0.0, count: 5);
