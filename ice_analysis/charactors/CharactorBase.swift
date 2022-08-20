@@ -28,7 +28,7 @@ class CharactorBase : NSObject {
     public var defenseReduce = 0.505
     
     //突破元素抗性区
-    public var elementReduce = 0.9
+    public var elementReduce = 90.0
     
     //元素反应区
     public var reactionRate = 1.0
@@ -75,7 +75,7 @@ class CharactorBase : NSObject {
         print(defenseReduce)
         print(skillRate / 100.0)
         
-        let res = (attack * (skillRate / 100.0) + externalAtkAreaVal ) * (1.0 + extraDamageRate / 100.0) * (1.0 + critDamage / 100.0) * reactionRate * defenseReduce * elementReduce
+        let res = (attack * (skillRate / 100.0) + externalAtkAreaVal ) * (1.0 + extraDamageRate / 100.0) * (1.0 + critDamage / 100.0) * reactionRate * defenseReduce * transferElementReduceToRealSector()
         return res
     }
     
@@ -87,6 +87,22 @@ class CharactorBase : NSObject {
     }
     func qDamage() -> Double {
         return CalculateRealDamage(skillRate: qskillRate)
+    }
+    
+    func transferElementReduceToRealSector() -> Double {
+        let enemyCurrentResistence = 100 - elementReduce
+        if(enemyCurrentResistence < 0) {
+            var res = 100.0 - (enemyCurrentResistence / 2)
+            res *= 0.01
+            return res
+        } else if(enemyCurrentResistence < 75) {
+            var res = 100.0 - enemyCurrentResistence
+            res *= 0.01
+            return res
+        } else {
+            let res = 100.0 / (100 + 4 * enemyCurrentResistence)
+            return res
+        }
     }
     
     func breakingDefenseBy(breakDefenseVal:Double) -> Double{

@@ -17,7 +17,7 @@ class IceCollectionCell : UICollectionViewCell {
     var BaseId:Int = 0;
     var lastRecev:Int = 0;
     var firstInit:Int = 1;
-    
+
     override init(frame:CGRect){
         super.init(frame: frame)
         setupUI()
@@ -152,26 +152,51 @@ class IceCollectionCell : UICollectionViewCell {
             } else {
                 mainStr += "%"
             }
-            self.mainContent.setTitle(mainName + " " + mainStr, for: UIControl.State.normal)
-            self.mainContent.tag = self.BaseId + 9;
+            
+            if(ider < 7) {
+                self.mainContent.setTitle(mainName + " " + mainStr, for: UIControl.State.normal)
+                self.mainContent.tag = self.BaseId + 9;
+            } else {
+                if(ider == 9){
+                    self.mainContent.setTitle("吃拐情况", for: UIControl.State.normal)
+                } else {
+                    self.mainContent.setTitle("圣遗物额外加成", for: UIControl.State.normal)
+                }
+
+            }
+            
+
         
-            for i in 0...3 {
-                subContents[i].setTitle(sC[i], for: UIControl.State.normal)
-                if(self.whetherValid(item: sC[i], validKeys: validKeys)){
+            
+            var extraindex = 0
+            if ider == 9 {
+                extraindex = 4
+            }
+            for ai in 0...3 {
+                var i = ai
+                var ci = ai + extraindex
+                subContents[i].setTitle(sC[ci], for: UIControl.State.normal)
+                if(self.whetherValid(item: sC[ci], validKeys: validKeys)){
                     subContents[i].setTitleColor(UIColor.black, for: UIControl.State.normal)
                 } else {
                     subContents[i].setTitleColor(UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1.0), for: UIControl.State.normal)
                 }
-                var str = String(sV[i])
-                if(!sC[i].contains("小") && !sC[i].contains("精通")){
+                var str = String(sV[ci])
+                if(!sC[ci].contains("小") && !sC[ci].contains("精通")){
                     str += "%"
                 } else {
-                    str = String(Int(sV[i]))
+                    str = String(Int(sV[ci]))
                 }
                 subVals[i].text = "+"+str;
             }
         let score = String(format: "%1.1f", estimate);
-        self.scoreLabel.text = score
+        if(estimate < 1){
+            self.scoreLabel.text = ""
+            self.scoreLabel.backgroundColor = .clear
+        } else {
+            self.scoreLabel.text = score
+        }
+
     }
     
 }

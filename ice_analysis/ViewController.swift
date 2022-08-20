@@ -291,11 +291,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             let filteredVal = lastRecev - remainId;
             lastRecev = remainId;
             let blockId = remainId / 10;
-            let innerId = remainId - blockId * 10 - 5;
+            var innerId = remainId - blockId * 10 - 5;
             let trVal = Double(filteredVal) / 10000;
             if(blockId < 5){
                 subVals[blockId][innerId] = trVal;
             } else {
+                if(blockId > 8){
+                    innerId += 4
+                }
                 extraVals[innerId] = trVal;
                 print("recev extra val at ",innerId)
                 print(trVal)
@@ -414,7 +417,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             alertView.addAction(UIAlertAction(title: subVerb[i], style: .default) { [self] _ in
                 print("Pick ",self.subVerb[i])
                 let blockId = Int(self.lastRecev / 10);
-                let subId = self.lastRecev % 10;
+                var subId = self.lastRecev % 10;
                 
                 if(blockId < 5){
                     if(subId == 9) {
@@ -424,6 +427,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                         self.subContents[blockId][subId] = self.subVerb[i];
                     }
                 } else {
+                    if(blockId > 8){
+                        subId += 4
+                    }
                     self.extraContents[subId] = self.subVerb[i];
                 }
                 
@@ -523,7 +529,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 9
+        return 10
     }
     
     // custom function to generate a random UIColor
