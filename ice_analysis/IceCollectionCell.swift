@@ -41,7 +41,7 @@ class IceCollectionCell : UICollectionViewCell {
             if(newval == ""){
                 field.text = "0"
             }
-            let dVal = Double(newval)!
+            let dVal = Double(field.text ?? "0")!
             var biggerWrap = Int(dVal * 10000);
             biggerWrap += field.tag
             print(biggerWrap)

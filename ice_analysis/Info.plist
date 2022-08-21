@@ -4,6 +4,17 @@
 <dict>
 	<key>KnownWeapons</key>
 	<dict>
+		<key>猎人之径</key>
+		<dict>
+			<key>暴击率</key>
+			<string>44.1</string>
+			<key>精通转攻击</key>
+			<string>160</string>
+			<key>攻击</key>
+			<string>542</string>
+			<key>增伤</key>
+			<string>12</string>
+		</dict>
 		<key>西风猎弓</key>
 		<dict>
 			<key>元素充能</key>
@@ -55,7 +66,7 @@
 			<key>a</key>
 			<string>392</string>
 			<key>q</key>
-			<string>126</string>
+			<string>230</string>
 			<key>攻击</key>
 			<string>335</string>
 			<key>暴伤</key>
@@ -70,7 +81,7 @@
 			<key>a</key>
 			<string>392</string>
 			<key>q</key>
-			<string>126</string>
+			<string>230</string>
 			<key>攻击</key>
 			<string>335</string>
 			<key>暴伤</key>
@@ -85,7 +96,7 @@
 			<key>a</key>
 			<string>392</string>
 			<key>q</key>
-			<string>126</string>
+			<string>230</string>
 			<key>攻击</key>
 			<string>335</string>
 			<key>暴伤</key>

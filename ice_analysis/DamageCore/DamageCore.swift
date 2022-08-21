@@ -21,11 +21,16 @@ struct DamageCore {
             break
         
         case "甘雨","九条裟罗","七七":
-            var qdamage = cc.qDamage()
-            var adamageWithOutFire = cc.aDamage()
+            let a1damageWithOutFire = cc.qDamage()
+            let adamageWithOutFire = cc.aDamage()
             cc.element = "冰打火"
-            var adamageWithFire = cc.aDamage()
-            res = String(format: "纯冰重击 %1.1f \n融化重击 %1.1f \nQ %1.1f ", adamageWithOutFire, adamageWithFire, qdamage)
+            let adamageWithFire = cc.aDamage()
+            let a1damageWithFire = cc.qDamage()
+            let totalWithOutFire = a1damageWithOutFire + adamageWithOutFire
+            let totalWithFire = a1damageWithFire + adamageWithFire
+            let expectWithOutFire = totalWithOutFire * cc.critChance * 0.01
+            let expectWithFire = totalWithFire * cc.critChance * 0.01
+            res = String(format: "纯冰重击 一段%1.0f\n二段%1.0f共%1.0f\n融化重击 一段%1.0f\n二段%1.0f共%1.0f\n期望:冰%1.0f融%1.0f ", a1damageWithOutFire,adamageWithOutFire,totalWithOutFire ,a1damageWithFire,adamageWithFire, totalWithFire, expectWithOutFire, expectWithFire)
             break
             
         case "神里绫华":

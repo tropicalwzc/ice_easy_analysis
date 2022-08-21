@@ -10,44 +10,44 @@ import Foundation
 class CharactorBase : NSObject {
     
     public var element:String = "冰"
-    //白值+绿值攻击力
+    ///白值+绿值攻击力
     public var attack:Double = 0.0
     public var attackRate = 0.0
     
-    //白值攻击力
+    ///白值攻击力
     public var whiteAttack:Double = 0.0
     
     public var critChance:Double = 5.0
     public var critDamage:Double = 50.0
     public var elementMastery:Double = 0.0
     public var elementCharge:Double = 100.0
-    //增伤区
+    ///增伤区
     public var extraDamageRate:Double = 0.0
     
-    //突破防御区
+    ///突破防御区
     public var defenseReduce = 0.505
     
-    //突破元素抗性区
+    ///突破元素抗性区
     public var elementReduce = 90.0
     
-    //元素反应区
+    ///元素反应区
     public var reactionRate = 1.0
     
-    //额外攻击力
+    ///额外攻击力
     public var extraAttack = 0.0
     
-    //魔女如雷额外反应乘区
+    ///魔女如雷额外反应乘区
     public var extraElementMasteryRate = 0.0
     
-    //防御
+    ///防御
     public var defense:Double = 0.0
     public var defenseRate = 0.0
     
-    //生命
+    ///生命
     public var hitPoint:Double = 0.0
     public var hitPointRate = 0.0
     
-    //治疗
+    ///治疗
     public var healRate:Double = 0.0
     
     public var eskillRate = 0.0
@@ -55,8 +55,10 @@ class CharactorBase : NSObject {
     public var askillRate = 0.0
     
     
-    //申鹤类似拐的方式给予的额外值
+    ///申鹤类似拐的方式给予的额外值
     public var externalAtkAreaVal = 0.0
+    ///猎人之径
+    private var elementaryToExternalATKRate = 0.0
     
     var charactorBaseDict:Dictionary<String,Dictionary<String, String>>!
     var weaponBaseDict:Dictionary<String,Dictionary<String, String>>!
@@ -105,7 +107,7 @@ class CharactorBase : NSObject {
         }
     }
     
-    func breakingDefenseBy(breakDefenseVal:Double) -> Double{
+    func defenseBreakingBy(breakDefenseVal:Double) -> Double{
         var enemyDefense = 86.0 * 5.0 + 500.0;
         var remainRate = 1.0 - (breakDefenseVal / 100.0)
         enemyDefense *= remainRate
@@ -133,6 +135,7 @@ class CharactorBase : NSObject {
         self.attack = round(self.attack)
         self.defense = round(self.defense)
         self.hitPoint = round(self.hitPoint)
+        self.externalAtkAreaVal += self.elementaryToExternalATKRate * self.elementMastery
     }
     
     func printCurrentPad() -> Array<Double>{
@@ -202,7 +205,7 @@ class CharactorBase : NSObject {
                 break
                 
             case "破防":
-                defenseReduce = self.breakingDefenseBy(breakDefenseVal: Double(item.value)!)
+                defenseReduce = self.defenseBreakingBy(breakDefenseVal: Double(item.value)!)
                 break
             case "减抗":
                 elementReduce += Double(item.value)!
@@ -231,7 +234,11 @@ class CharactorBase : NSObject {
             case "充能":
                 elementCharge += Double(item.value)!
                 break
-                
+            
+            case "精通转攻击":
+                elementaryToExternalATKRate += Double(item.value)! * 0.01
+                break
+            
             default:
                 break
             }
