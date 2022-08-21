@@ -434,7 +434,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let k = String(format: "%@Copy$%d$", currentName ,index)
         return k
     }
-    
+    func getSlotTotalCount() -> Int {
+        return 100
+    }
     func readingFromWin(saveKey : String){
         
         let titmessage = String(format: "从哪个副本读取[%@]", currentName)
@@ -443,7 +445,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         alertView.addAction(UIAlertAction(title: "OK", style: .cancel) { _ in
         })
         
-        for i in 0 ..< 40 {
+        for i in 0 ..< getSlotTotalCount() {
             var tit = String(format: "读取副本 %d", i)
             let k = getCopyK(index: i)
             if !testDefaultsKeyExist(K: k) {
@@ -469,7 +471,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         alertView.addAction(UIAlertAction(title: "OK", style: .cancel) { _ in
         })
         
-        for i in 0 ..< 40 {
+        for i in 0 ..< getSlotTotalCount() {
             let tit = String(format: "保存到副本 %d", i)
             alertView.addAction(UIAlertAction(title: tit, style: .default) { [self] _ in
                 print("Save Pick ",i)
