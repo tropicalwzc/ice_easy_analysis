@@ -51,24 +51,27 @@ class CurrentPadStatusCell : UICollectionViewCell {
         self.validSubBtns = Array<UIButton>()
         self.realFlushVals = Array<UILabel>()
         
-        let perwidth = 154.0
+        let smallsidelen = ScreenUtils.getScreenSmallSideLength()
+        let cellper = smallsidelen * 0.0625
+        let perwidth = smallsidelen * 0.5
+        
         for i in 0 ... 7 {
             
             let x = 0.0
-            let y = Double(i) * 19
+            let y = Double(i) * cellper
             let btn = UIButton()
             let realFlush = UILabel()
             
-            var btnwid = 40.0
+            let btnwid = cellper * 2.1
             
-            btn.frame = CGRect(x: x, y: y, width: btnwid, height: 18)
+            btn.frame = CGRect(x: x, y: y, width: btnwid, height: cellper - 1)
             btn.tag = 1000 + i
             btn.setTitleColor(UIColor.white, for: UIControl.State.normal)
             btn.backgroundColor = UIColor (named: "diffgreen")
             btn.setTitle(outkeys[i], for: UIControl.State.normal)
             self.validSubBtns.append(btn)
             
-            realFlush.frame = CGRect(x: btnwid + 1, y: y, width: perwidth - btnwid, height: 18)
+            realFlush.frame = CGRect(x: btnwid + 1, y: y, width: perwidth - btnwid, height: cellper - 1)
             realFlush.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.light)
             realFlush.backgroundColor = self.randomColor()
             self.realFlushVals.append(realFlush)

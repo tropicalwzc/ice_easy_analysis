@@ -4,6 +4,65 @@
 <dict>
 	<key>KnownWeapons</key>
 	<dict>
+		<key>天空之刃</key>
+		<dict>
+			<key>暴击率</key>
+			<string>4</string>
+			<key>元素充能</key>
+			<string>55.1</string>
+			<key>攻击</key>
+			<string>608</string>
+		</dict>
+		<key>铁蜂刺</key>
+		<dict>
+			<key>元素精通</key>
+			<string>165</string>
+			<key>攻击</key>
+			<string>510</string>
+		</dict>
+		<key>天目影打刀</key>
+		<dict>
+			<key>大攻击</key>
+			<string>55.1</string>
+			<key>攻击</key>
+			<string>454</string>
+		</dict>
+		<key>匣里龙吟</key>
+		<dict>
+			<key>增伤</key>
+			<string>24</string>
+			<key>大攻击</key>
+			<string>41.3</string>
+			<key>攻击</key>
+			<string>510</string>
+		</dict>
+		<key>贯虹之槊</key>
+		<dict>
+			<key>大攻击</key>
+			<string>49.6</string>
+			<key>攻击</key>
+			<string>608</string>
+		</dict>
+		<key>渔获</key>
+		<dict>
+			<key>暴击率</key>
+			<string>12</string>
+			<key>元素充能</key>
+			<string>45.9</string>
+			<key>攻击</key>
+			<string>510</string>
+			<key>增伤</key>
+			<string>32</string>
+		</dict>
+		<key>不灭月华</key>
+		<dict>
+			<key>大生命</key>
+			<string>49.6</string>
+			<key>攻击</key>
+			<string>608</string>
+			<key>治疗量</key>
+			<string>10</string>
+		</dict>
 		<key>猎人之径</key>
 		<dict>
 			<key>暴击率</key>
@@ -61,6 +120,95 @@
 	</dict>
 	<key>KnownCharactors</key>
 	<dict>
+		<key>迪奥娜</key>
+		<dict>
+			<key>百分比生命护盾量</key>
+			<string>13.7</string>
+			<key>固定护盾量</key>
+			<string>1646</string>
+			<key>百分比生命治疗量</key>
+			<string>10.14</string>
+			<key>固定治疗量</key>
+			<string>1219</string>
+			<key>攻击</key>
+			<string>212</string>
+			<key>增伤</key>
+			<string>24</string>
+			<key>生命</key>
+			<string>8481</string>
+			<key>防御</key>
+			<string>601</string>
+		</dict>
+		<key>珊瑚宫心海</key>
+		<dict>
+			<key>治疗量</key>
+			<string>25</string>
+			<key>暴击率</key>
+			<string>-100</string>
+			<key>a</key>
+			<string>109.4</string>
+			<key>q</key>
+			<string>8.2</string>
+			<key>百分比生命治疗量</key>
+			<string>7.5</string>
+			<key>固定治疗量</key>
+			<string>862</string>
+			<key>攻击</key>
+			<string>234</string>
+			<key>增伤</key>
+			<string>28.8</string>
+			<key>生命</key>
+			<string>13471</string>
+			<key>防御</key>
+			<string>657</string>
+		</dict>
+		<key>班尼特</key>
+		<dict>
+			<key>百分比生命治疗量</key>
+			<string>12.75</string>
+			<key>固定治疗量</key>
+			<string>1588</string>
+			<key>百分比白值攻击力加成</key>
+			<string>139</string>
+			<key>攻击</key>
+			<string>191</string>
+			<key>元素充能</key>
+			<string>26.7</string>
+			<key>生命</key>
+			<string>12393</string>
+			<key>防御</key>
+			<string>771</string>
+		</dict>
+		<key>雷电将军</key>
+		<dict>
+			<key>e</key>
+			<string>721</string>
+			<key>q</key>
+			<string>1141</string>
+			<key>攻击</key>
+			<string>337</string>
+			<key>元素充能</key>
+			<string>32</string>
+			<key>生命</key>
+			<string>12907</string>
+			<key>防御</key>
+			<string>789</string>
+		</dict>
+		<key>刻晴</key>
+		<dict>
+			<key>e</key>
+			<string>286</string>
+			<key>q</key>
+			<string>340</string>
+			<key>攻击</key>
+			<string>323</string>
+			<key>暴伤</key>
+			<string>38.4</string>
+			<key>生命</key>
+			<string>13103</string>
+			<key>防御</key>
+			<string>799</string>
+		</dict>
 		<key>七七</key>
 		<dict>
 			<key>a</key>
@@ -162,33 +310,5 @@
 	<array>
 		<dict/>
 	</array>
-	<key>神里绫华</key>
-	<dict>
-		<key>e</key>
-		<string>431</string>
-		<key>q</key>
-		<string>239</string>
-		<key>增伤</key>
-		<string>33</string>
-		<key>攻击</key>
-		<string>342</string>
-		<key>暴伤</key>
-		<string>38.4</string>
-		<key>生命</key>
-		<string>12858</string>
-		<key>破防</key>
-		<string>30</string>
-		<key>防御</key>
-		<string>784</string>
-	</dict>
-	<key>雾切</key>
-	<dict>
-		<key>增伤</key>
-		<string>40</string>
-		<key>攻击</key>
-		<string>674</string>
-		<key>暴伤</key>
-		<string>44.1</string>
-	</dict>
 </dict>
 </plist>

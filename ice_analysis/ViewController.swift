@@ -16,10 +16,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var validVals:Array<Double>!
     var outkeysToId:Dictionary<String,Int>!
     
-    let subVerb = ["暴击率","暴击伤害","大攻击","小攻击","元素精通","元素充能","大生命","小生命","大防御","小防御","治疗量","元素伤害","物理伤害","生命值", "破防", "减抗"," "]
+    let subVerb = ["暴击率","暴击伤害","大攻击","小攻击","元素精通","元素充能","大生命","小生命","大防御","小防御","治疗量","元素伤害","物理伤害","生命值", "破防", "减抗","充能转增伤", " "]
     let charactorNames = ["神里绫华","八重神子","刻晴","雷电将军","班尼特","枫原万叶","珊瑚宫心海","菲谢尔","甘雨","烟绯","迪卢克","罗莎莉亚","迪奥娜","莫娜","爷","七七","鹿野苑平藏","九条裟罗","钟离","胡桃","草神"]
     
-    let weaponNames = ["雾切","四风原典","破魔之弓","阿莫斯之弓","西风猎弓","猎人之径"]
+    let weaponNames = ["雾切","四风原典","破魔之弓","阿莫斯之弓","西风猎弓","猎人之径","渔获","不灭月华","天空之刃","铁蜂刺","匣里龙吟","天目影打刀","贯虹之槊"]
     
     let subVerbMaxVals = [31.1,62.2,46.65,311,187,51.8,46.6,4780,58.6,58.6,35.9,46.6,58.6, 4780]
     let midPerCount = [3.305,6.61,4.9575,50,20,5.5,5.0,600,6.2,43,100,100,100, 600]
@@ -224,9 +224,24 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
+    func testDefaultsKeyExist(K:String) -> Bool {
+        let mainContentsK = K + "?mainContents"
+        let item = UserDefaults.standard.object(forKey: mainContentsK)
+        if(item == nil){
+            return false;
+        }
+        return true
+    }
+    
     func readDefaultsKey(K:String) -> Bool{
         let defaults = UserDefaults.standard
         let mainContentsK = K + "?mainContents"
+        
+        let item = defaults.object(forKey: mainContentsK)
+        if(item == nil){
+            return false;
+        }
+        
         let mainValsK = K + "?mainVals"
         let subContentsK = K + "?subContents"
         let subValsK = K + "?subVals"
@@ -234,11 +249,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let weaponK = K + "?weapon"
         let extraContentsK = K + "?extraContents"
         let extraValsK = K + "?extraVals"
-        
-        let item = defaults.object(forKey: mainContentsK)
-        if(item == nil){
-            return false;
-        }
         
         self.mainContents = (defaults.object(forKey: mainContentsK) as! Array<String>)
         self.mainVals = (defaults.object(forKey: mainValsK) as! Array<Double>)
@@ -248,6 +258,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.currentWeapon = defaults.object(forKey: weaponK) as! String
         self.extraContents = (defaults.object(forKey: extraContentsK) as! Array<String>)
         self.extraVals = (defaults.object(forKey: extraValsK) as! Array<Double>)
+        
+        keyAnalysisResult = howMuchDamage()
         self.collectionView.reloadData()
         
         return true;
@@ -285,6 +297,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             if(lastRecev == 2002){
                 keyAnalysisResult = howMuchDamage()
                 self.collectionView.reloadData()
+            }
+            
+            if(lastRecev == 2005){
+                self.readingFromWin(saveKey: "")
+            }
+            
+            if(lastRecev == 2006){
+                self.savingToWin(saveKey: "")
             }
 
         } else if(lastRecev > 10000) {
@@ -409,6 +429,57 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBAction func changeCharactor(_ sender: Any) {
         showCharactorPickWin()
     }
+    
+    func getCopyK(index : Int) -> String {
+        let k = String(format: "%@Copy$%d$", currentName ,index)
+        return k
+    }
+    
+    func readingFromWin(saveKey : String){
+        
+        let titmessage = String(format: "从哪个副本读取[%@]", currentName)
+        let helpmessage = String(format: "如果不存在副本会将当前内容保存至该副本")
+        let alertView = UIAlertController(title: titmessage, message: helpmessage, preferredStyle: .actionSheet)
+        alertView.addAction(UIAlertAction(title: "OK", style: .cancel) { _ in
+        })
+        
+        for i in 0 ..< 40 {
+            var tit = String(format: "读取副本 %d", i)
+            let k = getCopyK(index: i)
+            if !testDefaultsKeyExist(K: k) {
+                tit += " [空]"
+            }
+            alertView.addAction(UIAlertAction(title: tit, style: .default) { [self] _ in
+                print("Read Pick ",i)
+                let pickedKey = getCopyK(index: i)
+                if testDefaultsKeyExist(K: pickedKey) {
+                    if !readDefaultsKey(K: pickedKey) {
+                        saveToDefaultsKey(K: pickedKey)
+                    }
+                } else {
+                    saveToDefaultsKey(K: pickedKey)
+                }
+            })
+        }
+        self.present(alertView, animated: true, completion: nil)
+    }
+    
+    func savingToWin(saveKey : String){
+        let alertView = UIAlertController(title: "覆盖保存到哪个副本?", message: currentName, preferredStyle: .actionSheet)
+        alertView.addAction(UIAlertAction(title: "OK", style: .cancel) { _ in
+        })
+        
+        for i in 0 ..< 40 {
+            let tit = String(format: "保存到副本 %d", i)
+            alertView.addAction(UIAlertAction(title: tit, style: .default) { [self] _ in
+                print("Save Pick ",i)
+                let pickedKey = getCopyK(index: i)
+                saveToDefaultsKey(K: pickedKey)
+            })
+        }
+        self.present(alertView, animated: true, completion: nil)
+    }
+    
     func showAlert(value : String){
         let alertView = UIAlertController(title: "副词修改", message: value, preferredStyle: .actionSheet)
             alertView.addAction(UIAlertAction(title: "OK", style: .cancel) { _ in

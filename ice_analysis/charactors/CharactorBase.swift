@@ -25,7 +25,7 @@ class CharactorBase : NSObject {
     public var extraDamageRate:Double = 0.0
     
     ///突破防御区
-    public var defenseReduce = 0.505
+    public var defenseReduce = 0.50
     
     ///突破元素抗性区
     public var elementReduce = 90.0
@@ -47,8 +47,20 @@ class CharactorBase : NSObject {
     public var hitPoint:Double = 0.0
     public var hitPointRate = 0.0
     
-    ///治疗
+    ///治疗量加成
     public var healRate:Double = 0.0
+    ///基础治疗量
+    public var basicHeal = 0.0
+    ///基于生命值百分比治疗量
+    public var health2HealRate = 0.0
+    ///基础护盾
+    public var basicArmour = 0.0
+    ///基于生命值百分比护盾
+    public var health2ArmourRate = 0.0
+    
+    
+    ///基于白值攻击力给予的攻击力加成
+    public var bennitATKRate = 0.0
     
     public var eskillRate = 0.0
     public var qskillRate = 0.0
@@ -59,6 +71,8 @@ class CharactorBase : NSObject {
     public var externalAtkAreaVal = 0.0
     ///猎人之径
     private var elementaryToExternalATKRate = 0.0
+    ///绝缘套或者雷神的充能转增伤比例
+    public var ElementryCharge2extraDamage = 0.0
     
     var charactorBaseDict:Dictionary<String,Dictionary<String, String>>!
     var weaponBaseDict:Dictionary<String,Dictionary<String, String>>!
@@ -77,7 +91,12 @@ class CharactorBase : NSObject {
         print(defenseReduce)
         print(skillRate / 100.0)
         
-        let res = (attack * (skillRate / 100.0) + externalAtkAreaVal ) * (1.0 + extraDamageRate / 100.0) * (1.0 + critDamage / 100.0) * reactionRate * defenseReduce * transferElementReduceToRealSector()
+        var realcritDamage = critDamage
+        if critChance < 0.01 {
+            realcritDamage = 0.0
+        }
+        
+        let res = (attack * (skillRate / 100.0) + externalAtkAreaVal ) * (1.0 + extraDamageRate / 100.0) * (1.0 + realcritDamage / 100.0) * reactionRate * defenseReduce * transferElementReduceToRealSector()
         return res
     }
     
@@ -89,6 +108,19 @@ class CharactorBase : NSObject {
     }
     func qDamage() -> Double {
         return CalculateRealDamage(skillRate: qskillRate)
+    }
+    
+    /// 单位治疗量
+    func healTotal() -> Double {
+        var res = hitPoint * health2HealRate * 0.01 + basicHeal
+        res *= (1.0 + healRate * 0.01)
+        return res
+    }
+    
+    /// 单位盾量
+    func armourTotal() -> Double {
+        let res = hitPoint * health2ArmourRate * 0.01 + basicArmour
+        return res
     }
     
     func transferElementReduceToRealSector() -> Double {
@@ -108,7 +140,8 @@ class CharactorBase : NSObject {
     }
     
     func defenseBreakingBy(breakDefenseVal:Double) -> Double{
-        var enemyDefense = 86.0 * 5.0 + 500.0;
+        // 以90级小怪作为靶子计算
+        var enemyDefense = 90.0 * 5.0 + 500.0;
         var remainRate = 1.0 - (breakDefenseVal / 100.0)
         enemyDefense *= remainRate
         let res = 950 / (950 + enemyDefense)
@@ -117,6 +150,7 @@ class CharactorBase : NSObject {
     
     func loadCurrentRelic(cDict : Dictionary<String,String>){
         let orgWhiteAttack = self.attack
+        self.whiteAttack = orgWhiteAttack
         let orgWhiteDefence = self.defense
         let orgWhiteHitPoint = self.hitPoint
         self.addingDictToPad(cDict: cDict)
@@ -136,6 +170,9 @@ class CharactorBase : NSObject {
         self.defense = round(self.defense)
         self.hitPoint = round(self.hitPoint)
         self.externalAtkAreaVal += self.elementaryToExternalATKRate * self.elementMastery
+        if ElementryCharge2extraDamage > 0 {
+            self.extraDamageRate += ElementryCharge2extraDamage * elementCharge * 0.01
+        }
     }
     
     func printCurrentPad() -> Array<Double>{
@@ -239,6 +276,29 @@ class CharactorBase : NSObject {
                 elementaryToExternalATKRate += Double(item.value)! * 0.01
                 break
             
+            case "治疗量加成","治疗量":
+                healRate += Double(item.value)!
+                break
+            
+            case "百分比生命治疗量":
+                health2HealRate += Double(item.value)!
+                break
+            case "固定治疗量":
+                basicHeal += Double(item.value)!
+                break
+            case "百分比白值攻击力加成":
+                bennitATKRate += Double(item.value)!
+                break
+            
+            case "百分比生命护盾量":
+                health2ArmourRate += Double(item.value)!
+                break
+            case "固定护盾量":
+                basicArmour += Double(item.value)!
+                break
+            case "充能转增伤":
+                ElementryCharge2extraDamage += Double(item.value)!
+                break
             default:
                 break
             }

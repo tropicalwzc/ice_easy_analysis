@@ -13,9 +13,9 @@ struct DamageCore {
         var cc = base
         switch charactorName {
         case "八重神子":
-            var qdamage = cc.qDamage()
+            let qdamage = cc.qDamage()
             cc.extraDamageRate += cc.elementMastery * 0.15
-            var edamage = cc.eDamage()
+            let edamage = cc.eDamage()
 
             res = String(format: "E %1.1f \nQ %1.1f ", edamage, qdamage)
             break
@@ -34,10 +34,38 @@ struct DamageCore {
             break
             
         case "神里绫华":
-            var qdamage = cc.qDamage()
-            var edamage = cc.eDamage()
-            res = String(format: "E %1.1f \nQ %1.1f ", edamage, qdamage)
+            let qdamage = cc.qDamage()
+            let edamage = cc.eDamage()
+            res = String(format: "E %1.0f \nQ %1.0f ", edamage, qdamage)
             break
+            
+        case "珊瑚宫心海":
+            let heal = cc.healTotal()
+            cc.externalAtkAreaVal = cc.hitPoint * (cc.qskillRate + cc.healRate * 0.15) * 0.01
+            let qdamage = cc.aDamage()
+            res = String(format: "水母治疗量 %1.0f \nQ普攻一段 %1.0f ", heal, qdamage)
+            break
+        case "班尼特":
+            let ATKmore = cc.bennitATKRate * cc.whiteAttack * 0.01
+            let heal = cc.healTotal()
+            res = String(format: "攻击力加成 %1.0f \nQ治疗 %1.0f ", ATKmore, heal)
+            break
+        case "迪奥娜":
+            let armour = cc.armourTotal()
+            let heal = cc.healTotal()
+            res = String(format: "E短按护盾 %1.0f\nE长按护盾 %1.0f\nQ治疗 %1.0f ", armour, armour * 1.75, heal)
+            break
+        
+        case "雷电将军":
+            print("BeginLL")
+            print(cc.extraDamageRate)
+            cc.extraDamageRate += (cc.elementCharge - 100) * 0.4
+            print(cc.extraDamageRate)
+            let noHope = cc.eDamage()
+            let fullHope = cc.qDamage()
+            res = String(format: "0愿力开刀 %1.0f\n满愿力开刀 %1.0f ", noHope, fullHope)
+            break
+            
         default:
             break
         }
