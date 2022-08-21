@@ -4,6 +4,22 @@
 <dict>
 	<key>KnownWeapons</key>
 	<dict>
+		<key>试作斩岩</key>
+		<dict>
+			<key>物理伤害</key>
+			<string>34.5</string>
+			<key>攻击</key>
+			<string>565</string>
+		</dict>
+		<key>落霞</key>
+		<dict>
+			<key>增伤</key>
+			<string>20</string>
+			<key>元素充能</key>
+			<string>30.6</string>
+			<key>攻击</key>
+			<string>565</string>
+		</dict>
 		<key>薙草之稻光</key>
 		<dict>
 			<key>过百充能转攻击</key>
@@ -248,18 +264,18 @@
 		</dict>
 		<key>九条裟罗</key>
 		<dict>
-			<key>a</key>
-			<string>392</string>
+			<key>百分比白值攻击力加成</key>
+			<string>86</string>
 			<key>q</key>
-			<string>230</string>
+			<string>819.2</string>
 			<key>攻击</key>
-			<string>335</string>
-			<key>暴伤</key>
-			<string>38.4</string>
+			<string>195</string>
+			<key>大攻击</key>
+			<string>24</string>
 			<key>生命</key>
-			<string>9797</string>
+			<string>9570</string>
 			<key>防御</key>
-			<string>630</string>
+			<string>628</string>
 		</dict>
 		<key>甘雨</key>
 		<dict>

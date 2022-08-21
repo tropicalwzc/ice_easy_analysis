@@ -20,7 +20,7 @@ struct DamageCore {
             res = String(format: "E %1.1f \nQ %1.1f ", edamage, qdamage)
             break
         
-        case "甘雨","九条裟罗","七七":
+        case "甘雨","七七":
             let a1damageWithOutFire = cc.qDamage()
             let adamageWithOutFire = cc.aDamage()
             cc.element = "冰打火"
@@ -61,7 +61,11 @@ struct DamageCore {
             let fullHope = cc.qDamage()
             res = String(format: "0愿力开刀 %1.0f\n满愿力开刀 %1.0f ", noHope, fullHope)
             break
-            
+        
+        case "九条裟罗":
+            let ATKmore = cc.bennitATKRate * cc.whiteAttack * 0.01
+            let qdamage = cc.qDamage()
+            res = String(format: "攻击力加成 %1.0f \nQ %1.0f ", ATKmore, qdamage)
         default:
             break
         }
