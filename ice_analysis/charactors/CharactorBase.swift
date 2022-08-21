@@ -71,8 +71,12 @@ class CharactorBase : NSObject {
     public var externalAtkAreaVal = 0.0
     ///猎人之径
     private var elementaryToExternalATKRate = 0.0
-    ///绝缘套或者雷神的充能转增伤比例
+    ///绝缘套充能转增伤比例
     public var ElementryCharge2extraDamage = 0.0
+    ///雷神充能转增伤比例
+    public var ElementryCharge2extraDamageOver100 = 0.0
+    ///薙刀充能转攻击比例
+    public var ElementryCharge2ATKOver100 = 0.0
     
     var charactorBaseDict:Dictionary<String,Dictionary<String, String>>!
     var weaponBaseDict:Dictionary<String,Dictionary<String, String>>!
@@ -160,6 +164,12 @@ class CharactorBase : NSObject {
         self.attack = orgWhiteAttack
         self.defense = orgWhiteDefence
         self.hitPoint = orgWhiteHitPoint
+        
+        // 薙刀
+        if ElementryCharge2ATKOver100 > 0 {
+            attackRate += ElementryCharge2ATKOver100 * (elementCharge - 100) * 0.01
+        }
+        
         self.attack *= (1.0 + attackRate / 100)
         self.hitPoint *= (1.0 + hitPointRate / 100)
         self.defense *= (1.0 + defenseRate/100)
@@ -172,6 +182,9 @@ class CharactorBase : NSObject {
         self.externalAtkAreaVal += self.elementaryToExternalATKRate * self.elementMastery
         if ElementryCharge2extraDamage > 0 {
             self.extraDamageRate += ElementryCharge2extraDamage * elementCharge * 0.01
+        }
+        if ElementryCharge2extraDamageOver100 > 0 {
+            self.extraDamageRate += ElementryCharge2extraDamageOver100 * (elementCharge - 100) * 0.01
         }
     }
     
@@ -299,6 +312,15 @@ class CharactorBase : NSObject {
             case "充能转增伤":
                 ElementryCharge2extraDamage += Double(item.value)!
                 break
+                
+            case "过百充能转增伤":
+                ElementryCharge2extraDamageOver100 += Double(item.value)!
+                break
+                
+            case "过百充能转攻击":
+                ElementryCharge2ATKOver100 += Double(item.value)!
+                break
+                
             default:
                 break
             }

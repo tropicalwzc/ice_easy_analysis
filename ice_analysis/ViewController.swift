@@ -19,7 +19,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     let subVerb = ["暴击率","暴击伤害","大攻击","小攻击","元素精通","元素充能","大生命","小生命","大防御","小防御","治疗量","元素伤害","物理伤害","生命值", "破防", "减抗","充能转增伤", " "]
     let charactorNames = ["神里绫华","八重神子","刻晴","雷电将军","班尼特","枫原万叶","珊瑚宫心海","菲谢尔","甘雨","烟绯","迪卢克","罗莎莉亚","迪奥娜","莫娜","爷","七七","鹿野苑平藏","九条裟罗","钟离","胡桃","草神"]
     
-    let weaponNames = ["雾切","四风原典","破魔之弓","阿莫斯之弓","西风猎弓","猎人之径","渔获","不灭月华","天空之刃","铁蜂刺","匣里龙吟","天目影打刀","贯虹之槊"]
+    let weaponNames = ["雾切","四风原典","破魔之弓","阿莫斯之弓","西风猎弓","猎人之径","渔获","不灭月华","天空之刃","铁蜂刺","匣里龙吟","天目影打刀","贯虹之槊","和璞鸢","薙草之稻光"]
     
     let subVerbMaxVals = [31.1,62.2,46.65,311,187,51.8,46.6,4780,58.6,58.6,35.9,46.6,58.6, 4780]
     let midPerCount = [3.305,6.61,4.9575,50,20,5.5,5.0,600,6.2,43,100,100,100, 600]
@@ -186,6 +186,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func updateLastWeapon(Name:String){
         self.currentWeapon = Name
+        keyAnalysisResult = howMuchDamage()
         self.collectionView.reloadData()
     }
     
@@ -472,7 +473,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         })
         
         for i in 0 ..< getSlotTotalCount() {
-            let tit = String(format: "保存到副本 %d", i)
+            var tit = String(format: "保存到副本 %d", i)
+            let k = getCopyK(index: i)
+            if !testDefaultsKeyExist(K: k) {
+                tit += " [空]"
+            }
             alertView.addAction(UIAlertAction(title: tit, style: .default) { [self] _ in
                 print("Save Pick ",i)
                 let pickedKey = getCopyK(index: i)

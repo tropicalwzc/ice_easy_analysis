@@ -117,6 +117,7 @@
 		B44E591F28923D5700B47116 /* ice_analysis */ = {
 			isa = PBXGroup;
 			children = (
+				B466038528B242A100860BB9 /* Cells */,
 				B46602FE28B0CB2C00860BB9 /* DamageCore */,
 				B46602FB28B0BBF000860BB9 /* Utils */,
 				B46601BE2893E5E800860BB9 /* charactors */,
@@ -124,10 +125,6 @@
 				B46601BA2893C20600860BB9 /* globalConstants.swift */,
 				B44E592228923D5700B47116 /* SceneDelegate.swift */,
 				B44E592428923D5700B47116 /* ViewController.swift */,
-				B44E595328924F7D00B47116 /* IceCollectionCell.swift */,
-				B46601B82893BE4200860BB9 /* ValidPickerCell.swift */,
-				B46601C3289669CF00860BB9 /* CharactorWeaponCell.swift */,
-				B46601C52896819100860BB9 /* CurrentPadStatusCell.swift */,
 				B44E592628923D5700B47116 /* Main.storyboard */,
 				B44E592C28923D5800B47116 /* Assets.xcassets */,
 				B44E592E28923D5800B47116 /* LaunchScreen.storyboard */,
@@ -176,6 +173,17 @@
 				B46602FF28B0CB3F00860BB9 /* DamageCore.swift */,
 			);
 			path = DamageCore;
+			sourceTree = "<group>";
+		};
+		B466038528B242A100860BB9 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B44E595328924F7D00B47116 /* IceCollectionCell.swift */,
+				B46601B82893BE4200860BB9 /* ValidPickerCell.swift */,
+				B46601C3289669CF00860BB9 /* CharactorWeaponCell.swift */,
+				B46601C52896819100860BB9 /* CurrentPadStatusCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

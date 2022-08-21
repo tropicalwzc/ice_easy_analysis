@@ -4,6 +4,26 @@
 <dict>
 	<key>KnownWeapons</key>
 	<dict>
+		<key>薙草之稻光</key>
+		<dict>
+			<key>过百充能转攻击</key>
+			<string>28</string>
+			<key>元素充能</key>
+			<string>55.1</string>
+			<key>攻击</key>
+			<string>608</string>
+		</dict>
+		<key>和璞鸢</key>
+		<dict>
+			<key>增伤</key>
+			<string>12</string>
+			<key>大攻击</key>
+			<string>22.4</string>
+			<key>暴击率</key>
+			<string>22.1</string>
+			<key>攻击</key>
+			<string>674</string>
+		</dict>
 		<key>天空之刃</key>
 		<dict>
 			<key>暴击率</key>
@@ -39,7 +59,7 @@
 		<key>贯虹之槊</key>
 		<dict>
 			<key>大攻击</key>
-			<string>49.6</string>
+			<string>69.6</string>
 			<key>攻击</key>
 			<string>608</string>
 		</dict>
@@ -181,6 +201,8 @@
 		</dict>
 		<key>雷电将军</key>
 		<dict>
+			<key>过百充能转增伤</key>
+			<string>40</string>
 			<key>e</key>
 			<string>721</string>
 			<key>q</key>

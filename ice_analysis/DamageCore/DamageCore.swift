@@ -57,10 +57,6 @@ struct DamageCore {
             break
         
         case "雷电将军":
-            print("BeginLL")
-            print(cc.extraDamageRate)
-            cc.extraDamageRate += (cc.elementCharge - 100) * 0.4
-            print(cc.extraDamageRate)
             let noHope = cc.eDamage()
             let fullHope = cc.qDamage()
             res = String(format: "0愿力开刀 %1.0f\n满愿力开刀 %1.0f ", noHope, fullHope)
