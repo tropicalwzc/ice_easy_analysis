@@ -36,7 +36,10 @@ struct DamageCore {
         case "神里绫华":
             let qdamage = cc.qDamage()
             let edamage = cc.eDamage()
-            res = String(format: "E %1.0f \nQ %1.0f ", edamage, qdamage)
+
+            // 19 段切割 最后一段为1.5倍的爆炸
+            let expectDamage = qdamage * cc.critChance * 0.01 * 20.5
+            res = String(format: "E %1.0f \nQ %1.0f\n大卷期望 %1.0f\n大小卷期望 %1.0f ", edamage, qdamage, expectDamage, expectDamage * 1.4)
             break
             
         case "珊瑚宫心海":
