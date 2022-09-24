@@ -33,7 +33,8 @@ class CurrentPadStatusCell : UICollectionViewCell {
             if(isPersent[i]){
                 fulltitle = String(format: "%1.1f%%", validVals[i])
             } else {
-                fulltitle = String(format: "%1.0f", validVals[i])
+                print("acurate val is ",validVals[i])
+                fulltitle = String(format: "%d", Int(round(validVals[i])) )
             }
             self.realFlushVals[i].text = fulltitle
         }

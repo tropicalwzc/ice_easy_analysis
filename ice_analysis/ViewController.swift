@@ -23,7 +23,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     let subVerbMaxVals = [31.1,62.2,46.65,311,187,51.8,46.6,4780,58.6,58.6,35.9,46.6,58.6, 4780]
     let midPerCount = [3.305,6.61,4.9575,50,20,5.5,5.0,600,6.2,43,100,100,100, 600]
-    
+    var subVerbToIdDict = Dictionary<String,Int>()
+    let unitPerCount = [0.389,0.777,0.583,1.945,2.331,0.648,0.583,29.875,0.729,2.315,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0]
     // 9.409984871406959
     private var mainContents:Array<String>!
     private var mainVals:Array<Double>!
@@ -39,7 +40,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     var keyAnalysisResult :String = ""
     var currentPadData:Array<Double>!
-    
+     
+    func initSubVerbToIdDict() {
+        for i in 0 ..< subVerb.count {
+            subVerbToIdDict[subVerb[i]] = i
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if(indexPath.row < 5){
@@ -378,6 +384,21 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return res
     }
     
+    func normalizeSubVal(name : String, orgVal : Double) -> Double {
+        if let id = subVerbToIdDict[name] {
+            print("fixing ",name, orgVal)
+            let unit = unitPerCount[id]
+            var rate = orgVal / unit
+            var rounded = round(rate)
+            var fixedVal = rounded * unit
+            print("fixed is ",fixedVal)
+            return fixedVal
+        } else {
+            return orgVal
+        }
+
+    }
+    
     func packingAllToOneDict() -> Dictionary<String,String> {
         var finres = Dictionary<String,String>()
         var res = Dictionary<String,Double>()
@@ -389,7 +410,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             let maxkey = mainContents[i]
             res[maxkey]! += maxval
             for j in 0 ... 3 {
-                res[subContents[i][j]]! += subVals[i][j]
+                res[subContents[i][j]]! += normalizeSubVal(name: subContents[i][j], orgVal: subVals[i][j]) 
             }
         }
         
@@ -545,7 +566,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.initSubVerbToIdDict()
         var lastName = self.readLastName()
         self.currentPadData = Array(repeating: 0.0, count: 8)
         print(lastName)
