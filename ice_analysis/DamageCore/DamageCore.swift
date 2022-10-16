@@ -11,6 +11,10 @@ struct DamageCore {
     static func getCharactorKeyResultFromBase(base : CharactorBase, charactorName:String) -> String {
         var res = ""
         var cc = base
+        if cc.critChance > 100.0 {
+            cc.critChance = 100.0
+        }
+        
         switch charactorName {
         case "八重神子":
             let qdamage = cc.qDamage()
@@ -35,6 +39,7 @@ struct DamageCore {
             
         case "神里绫华":
             let qdamage = cc.qDamage()
+            cc.defenseReduce = 0.5
             let edamage = cc.eDamage()
 
             // 19 段切割 最后一段为1.5倍的爆炸
@@ -73,7 +78,7 @@ struct DamageCore {
         case "刻晴":
             let edamage = cc.eDamage()
             let qdamage = cc.qDamage()
-            res = String(format: "E %1.1f \nQ %1.1f ", edamage, qdamage)
+            res = String(format: "E %1.1f期望%1.1f \nQ %1.1f期望%1.1f ", edamage,edamage*cc.critChance*0.01 , qdamage, qdamage*((cc.critChance > 85 ? 85 : cc.critChance) + 15)*0.01)
             break
         default:
             break
