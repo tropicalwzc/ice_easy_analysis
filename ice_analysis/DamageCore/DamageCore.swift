@@ -69,6 +69,12 @@ struct DamageCore {
             let ATKmore = cc.bennitATKRate * cc.whiteAttack * 0.01
             let qdamage = cc.qDamage()
             res = String(format: "攻击力加成 %1.0f \nQ %1.0f ", ATKmore, qdamage)
+            
+        case "刻晴":
+            let edamage = cc.eDamage()
+            let qdamage = cc.qDamage()
+            res = String(format: "E %1.1f \nQ %1.1f ", edamage, qdamage)
+            break
         default:
             break
         }

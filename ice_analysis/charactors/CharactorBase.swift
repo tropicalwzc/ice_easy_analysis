@@ -77,6 +77,8 @@ class CharactorBase : NSObject {
     public var ElementryCharge2extraDamageOver100 = 0.0
     ///薙刀充能转攻击比例
     public var ElementryCharge2ATKOver100 = 0.0
+    ///磐岩结绿生命转攻击
+    public var HealthToATKRate = 0.0
     
     var charactorBaseDict:Dictionary<String,Dictionary<String, String>>!
     var weaponBaseDict:Dictionary<String,Dictionary<String, String>>!
@@ -158,7 +160,7 @@ class CharactorBase : NSObject {
         let orgWhiteDefence = self.defense
         let orgWhiteHitPoint = self.hitPoint
         self.addingDictToPad(cDict: cDict)
-        let smallAttack = self.attack - orgWhiteAttack
+        var smallAttack = self.attack - orgWhiteAttack
         let smallDefence = self.defense - orgWhiteDefence
         let smallHitPoint = self.hitPoint - orgWhiteHitPoint
         self.attack = orgWhiteAttack
@@ -173,12 +175,18 @@ class CharactorBase : NSObject {
         self.attack *= (1.0 + attackRate / 100)
         self.hitPoint *= (1.0 + hitPointRate / 100)
         self.defense *= (1.0 + defenseRate/100)
-        self.attack += smallAttack
         self.defense += smallDefence
         self.hitPoint += smallHitPoint
         self.attack = round(self.attack)
         self.defense = round(self.defense)
         self.hitPoint = round(self.hitPoint)
+        
+        if HealthToATKRate > 0 {
+            smallAttack += self.hitPoint * HealthToATKRate
+        }
+        
+        self.attack += smallAttack
+        
         self.externalAtkAreaVal += self.elementaryToExternalATKRate * self.elementMastery
         if ElementryCharge2extraDamage > 0 {
             self.extraDamageRate += ElementryCharge2extraDamage * elementCharge * 0.01
@@ -320,7 +328,10 @@ class CharactorBase : NSObject {
             case "过百充能转攻击":
                 ElementryCharge2ATKOver100 += Double(item.value)!
                 break
-                
+            
+            case "生命转攻击":
+                HealthToATKRate += Double(item.value)! * 0.01
+            
             default:
                 break
             }

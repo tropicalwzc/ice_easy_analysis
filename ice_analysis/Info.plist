@@ -4,6 +4,17 @@
 <dict>
 	<key>KnownWeapons</key>
 	<dict>
+		<key>磐岩结绿</key>
+		<dict>
+			<key>大生命</key>
+			<string>20</string>
+			<key>生命转攻击</key>
+			<string>1.2</string>
+			<key>暴击率</key>
+			<string>44.1</string>
+			<key>攻击</key>
+			<string>542</string>
+		</dict>
 		<key>试作斩岩</key>
 		<dict>
 			<key>物理伤害</key>
@@ -235,7 +246,7 @@
 		<key>刻晴</key>
 		<dict>
 			<key>e</key>
-			<string>286</string>
+			<string>302</string>
 			<key>q</key>
 			<string>340</string>
 			<key>攻击</key>
