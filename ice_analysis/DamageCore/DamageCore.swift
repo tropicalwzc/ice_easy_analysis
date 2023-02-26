@@ -10,7 +10,7 @@ import Foundation
 struct DamageCore {
     static func getCharactorKeyResultFromBase(base : CharactorBase, charactorName:String) -> String {
         var res = ""
-        var cc = base
+        let cc = base
         if cc.critChance > 100.0 {
             cc.critChance = 100.0
         }
@@ -47,6 +47,24 @@ struct DamageCore {
             res = String(format: "E %1.0f \nQ %1.0f\n大卷期望 %1.0f\n大小卷期望 %1.0f ", edamage, qdamage, expectDamage, expectDamage * 1.4)
             break
             
+        case "胡桃":
+            cc.element = "火打水"
+            let adamage = cc.aDamage()
+            let qdamage = cc.qDamage()
+            
+            res = String(format: "重击 %1.0f期望%1.0f \nQ %1.0f期望%1.0f ", adamage,adamage*cc.critChance*0.01 , qdamage, qdamage*(cc.critChance)*0.01)
+            break
+            
+        case "夜兰":
+            let orgAtk = cc.attack
+            cc.attack = cc.hitPoint
+            let edamage = cc.eDamage()
+            let qdamage = cc.qDamage()
+            cc.element = "水打火"
+            let slimEDamage = cc.eDamage()
+            res = String(format: "E %1.0f期望%1.0f\n蒸发%1.0f期望%1.0f\nQ %1.0f期望%1.0f ", edamage,edamage*cc.critChance*0.01,slimEDamage,slimEDamage*cc.critChance*0.01 , qdamage, qdamage*(cc.critChance)*0.01)
+            cc.attack = orgAtk
+            break
         case "珊瑚宫心海":
             let heal = cc.healTotal()
             cc.externalAtkAreaVal = cc.hitPoint * (cc.qskillRate + cc.healRate * 0.15) * 0.01
@@ -78,7 +96,7 @@ struct DamageCore {
         case "刻晴":
             let edamage = cc.eDamage()
             let qdamage = cc.qDamage()
-            res = String(format: "E %1.1f期望%1.1f \nQ %1.1f期望%1.1f ", edamage,edamage*cc.critChance*0.01 , qdamage, qdamage*((cc.critChance > 85 ? 85 : cc.critChance) + 15)*0.01)
+            res = String(format: "E %1.0f期望%1.0f \nQ %1.0f期望%1.0f ", edamage,edamage*cc.critChance*0.01 , qdamage, qdamage*((cc.critChance > 85 ? 85 : cc.critChance) + 15)*0.01)
             break
         default:
             break

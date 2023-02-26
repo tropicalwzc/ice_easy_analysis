@@ -16,10 +16,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var validVals:Array<Double>!
     var outkeysToId:Dictionary<String,Int>!
     
-    let subVerb = ["暴击率","暴击伤害","大攻击","小攻击","元素精通","元素充能","大生命","小生命","大防御","小防御","治疗量","元素伤害","物理伤害","生命值", "破防", "减抗","充能转增伤", " "]
-    let charactorNames = ["神里绫华","八重神子","刻晴","雷电将军","班尼特","枫原万叶","珊瑚宫心海","菲谢尔","甘雨","烟绯","迪卢克","罗莎莉亚","迪奥娜","莫娜","爷","七七","鹿野苑平藏","九条裟罗","钟离","胡桃","草神"]
+    let subVerb = ["暴击率","暴击伤害","大攻击","小攻击","元素精通","元素充能","大生命","小生命","大防御","小防御","治疗量","元素伤害","物理伤害","生命值", "破防", "减抗","充能转增伤","额外反应"," "]
+    let charactorNames = ["神里绫华","八重神子","刻晴","雷电将军","班尼特","枫原万叶","珊瑚宫心海","菲谢尔","甘雨","胡桃","草神","夜兰","烟绯","迪卢克","罗莎莉亚","迪奥娜","莫娜","爷","七七","鹿野苑平藏","九条裟罗","钟离"]
     
-    let weaponNames = ["雾切","磐岩结绿", "四风原典","破魔之弓","阿莫斯之弓","西风猎弓","猎人之径","渔获","不灭月华","天空之刃","铁蜂刺","匣里龙吟","天目影打刀","贯虹之槊","和璞鸢","薙草之稻光","试作斩岩","落霞"]
+    let weaponNames = ["雾切","磐岩结绿", "四风原典","破魔之弓","阿莫斯之弓","西风猎弓","猎人之径","渔获","不灭月华","天空之刃", "护摩","绝弦","若水","铁蜂刺","匣里龙吟","天目影打刀","贯虹之槊","和璞鸢","薙草之稻光","试作斩岩","落霞"]
     
     let subVerbMaxVals = [31.1,62.2,46.65,311,187,51.8,46.6,4780,58.6,58.6,35.9,46.6,58.6, 4780]
     let midPerCount = [3.305,6.61,4.9575,50,20,5.5,5.0,600,6.2,43,100,100,100, 600]
@@ -149,9 +149,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func scoreEstimate(ider : Int) -> Double {
         var finresval = 0.0
-        var res = self.convertToAttrDict(i: ider)
+        let res = self.convertToAttrDict(i: ider)
         for tup in res {
-            var rid = self.outkeysToId[tup.key]
+            let rid = self.outkeysToId[tup.key]
             if(validVals[rid!] > 0){
                 finresval += validVals[rid!] * tup.value
             }
@@ -432,13 +432,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func howMuchDamage() -> String {
-        var rcDict = packingAllToOneDict()
+        let rcDict = packingAllToOneDict()
         print(rcDict)
-        var cc = CharactorBase()
+        let cc = CharactorBase()
         var res = ""
         
-        var loadName = self.currentName
-        var loadWeapon = self.currentWeapon
+        let loadName = self.currentName
+        let loadWeapon = self.currentWeapon
         
         cc.loadCharactorName(Name: loadName)
         cc.loadWeaponName(Name: loadWeapon)
@@ -592,15 +592,26 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.collectionView.register(ValidPickerCell.self, forCellWithReuseIdentifier: reusePickerIdentifier)
         self.collectionView.register(CharactorWeaponCell.self, forCellWithReuseIdentifier: reuseCharactorIdentifier)
         self.collectionView.register(CurrentPadStatusCell.self, forCellWithReuseIdentifier: reuseCurrentPadIdentifier)
-        registerNoti();
+        
 
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        debugPrint("will disappear inregister ")
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            debugPrint("will appear register ")
+            self.registerNoti();
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-        NotificationCenter.default.removeObserver(self)
     }
     
     //UICollectionViewDelegateFlowLayout methods

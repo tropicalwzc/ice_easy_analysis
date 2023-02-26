@@ -250,7 +250,7 @@ class CharactorBase : NSObject {
             case "暴击率":
                 critChance += Double(item.value)!
                 break
-            case "元素精通":
+            case "元素精通", "精通":
                 elementMastery += Double(item.value)!
                 break
                 
@@ -332,6 +332,9 @@ class CharactorBase : NSObject {
             case "生命转攻击":
                 HealthToATKRate += Double(item.value)! * 0.01
             
+            case "额外反应":
+                extraElementMasteryRate += Double(item.value)! * 0.01
+                
             default:
                 break
             }

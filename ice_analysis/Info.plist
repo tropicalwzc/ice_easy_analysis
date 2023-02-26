@@ -4,6 +4,37 @@
 <dict>
 	<key>KnownWeapons</key>
 	<dict>
+		<key>护摩</key>
+		<dict>
+			<key>大生命</key>
+			<string>25</string>
+			<key>生命转攻击</key>
+			<string>2.2</string>
+			<key>暴伤</key>
+			<string>66.2</string>
+			<key>攻击</key>
+			<string>608</string>
+		</dict>
+		<key>绝弦</key>
+		<dict>
+			<key>增伤</key>
+			<string>48</string>
+			<key>精通</key>
+			<string>165</string>
+			<key>攻击</key>
+			<string>510</string>
+		</dict>
+		<key>若水</key>
+		<dict>
+			<key>增伤</key>
+			<string>20</string>
+			<key>大生命</key>
+			<string>16</string>
+			<key>暴伤</key>
+			<string>88.2</string>
+			<key>攻击</key>
+			<string>542</string>
+		</dict>
 		<key>磐岩结绿</key>
 		<dict>
 			<key>大生命</key>
@@ -167,6 +198,40 @@
 	</dict>
 	<key>KnownCharactors</key>
 	<dict>
+		<key>夜兰</key>
+		<dict>
+			<key>暴击率</key>
+			<string>19.2</string>
+			<key>生命</key>
+			<string>14450</string>
+			<key>防御</key>
+			<string>548</string>
+			<key>攻击</key>
+			<string>244</string>
+			<key>q</key>
+			<string>8.77</string>
+			<key>e</key>
+			<string>38.4</string>
+		</dict>
+		<key>胡桃</key>
+		<dict>
+			<key>增伤</key>
+			<string>33</string>
+			<key>生命转攻击</key>
+			<string>6.26</string>
+			<key>a</key>
+			<string>242.6</string>
+			<key>q</key>
+			<string>617</string>
+			<key>攻击</key>
+			<string>107</string>
+			<key>暴伤</key>
+			<string>38.4</string>
+			<key>生命</key>
+			<string>15552</string>
+			<key>防御</key>
+			<string>876</string>
+		</dict>
 		<key>迪奥娜</key>
 		<dict>
 			<key>百分比生命护盾量</key>
