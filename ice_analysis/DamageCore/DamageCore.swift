@@ -11,9 +11,6 @@ struct DamageCore {
     static func getCharactorKeyResultFromBase(base : CharactorBase, charactorName:String) -> String {
         var res = ""
         let cc = base
-        if cc.critChance > 100.0 {
-            cc.critChance = 100.0
-        }
         
         switch charactorName {
         case "八重神子":
@@ -32,8 +29,8 @@ struct DamageCore {
             let a1damageWithFire = cc.qDamage()
             let totalWithOutFire = a1damageWithOutFire + adamageWithOutFire
             let totalWithFire = a1damageWithFire + adamageWithFire
-            let expectWithOutFire = totalWithOutFire * cc.critChance * 0.01
-            let expectWithFire = totalWithFire * cc.critChance * 0.01
+            let expectWithOutFire = totalWithOutFire * cc.expectRate() * 0.01
+            let expectWithFire = totalWithFire * cc.expectRate() * 0.01
             res = String(format: "纯冰重击 一段%1.0f\n二段%1.0f共%1.0f\n融化重击 一段%1.0f\n二段%1.0f共%1.0f\n期望:冰%1.0f融%1.0f ", a1damageWithOutFire,adamageWithOutFire,totalWithOutFire ,a1damageWithFire,adamageWithFire, totalWithFire, expectWithOutFire, expectWithFire)
             break
             
@@ -41,9 +38,9 @@ struct DamageCore {
             let qdamage = cc.qDamage()
             cc.defenseReduce = 0.5
             let edamage = cc.eDamage()
-
+            
             // 19 段切割 最后一段为1.5倍的爆炸
-            let expectDamage = qdamage * cc.critChance * 0.01 * 20.5
+            let expectDamage = qdamage * cc.expectRate() * 0.01 * 20.5
             res = String(format: "E %1.0f \nQ %1.0f\n大卷期望 %1.0f\n大小卷期望 %1.0f ", edamage, qdamage, expectDamage, expectDamage * 1.4)
             break
             
@@ -52,7 +49,7 @@ struct DamageCore {
             let adamage = cc.aDamage()
             let qdamage = cc.qDamage()
             
-            res = String(format: "重击 %1.0f期望%1.0f \nQ %1.0f期望%1.0f ", adamage,adamage*cc.critChance*0.01 , qdamage, qdamage*(cc.critChance)*0.01)
+            res = String(format: "重击 %1.0f期望%1.0f \nQ %1.0f期望%1.0f ", adamage,adamage*cc.expectRate()*0.01 , qdamage, qdamage*(cc.expectRate())*0.01)
             break
             
         case "夜兰":
@@ -62,7 +59,7 @@ struct DamageCore {
             let qdamage = cc.qDamage()
             cc.element = "水打火"
             let slimEDamage = cc.eDamage()
-            res = String(format: "E %1.0f期望%1.0f\n蒸发%1.0f期望%1.0f\nQ %1.0f期望%1.0f ", edamage,edamage*cc.critChance*0.01,slimEDamage,slimEDamage*cc.critChance*0.01 , qdamage, qdamage*(cc.critChance)*0.01)
+            res = String(format: "E %1.0f期望%1.0f\n蒸发%1.0f期望%1.0f\nQ %1.0f期望%1.0f ", edamage,edamage*cc.expectRate()*0.01,slimEDamage,slimEDamage*cc.expectRate()*0.01 , qdamage, qdamage*(cc.expectRate())*0.01)
             cc.attack = orgAtk
             break
         case "珊瑚宫心海":
@@ -96,7 +93,7 @@ struct DamageCore {
         case "刻晴":
             let edamage = cc.eDamage()
             let qdamage = cc.qDamage()
-            res = String(format: "E %1.0f期望%1.0f \nQ %1.0f期望%1.0f ", edamage,edamage*cc.critChance*0.01 , qdamage, qdamage*((cc.critChance > 85 ? 85 : cc.critChance) + 15)*0.01)
+            res = String(format: "E %1.0f期望%1.0f \nQ %1.0f期望%1.0f ", edamage,edamage*cc.expectRate()*0.01 , qdamage, qdamage*((cc.expectRate() > 85 ? 85 : cc.expectRate()) + 15)*0.01)
             break
         default:
             break

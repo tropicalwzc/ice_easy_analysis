@@ -106,6 +106,13 @@ class CharactorBase : NSObject {
         return res
     }
     
+    func expectRate() -> Double {
+        var chance = critChance > 100.0 ? 100.0 : critChance
+        var remain = 100 - chance
+        chance += remain / (1.0 + critDamage / 100.0)
+        return chance
+    }
+    
     func aDamage() -> Double {
         return CalculateRealDamage(skillRate: askillRate)
     }
