@@ -106,7 +106,7 @@ class CharactorWeaponCell : UICollectionViewCell {
         self.keyDamageResult = UILabel()
         self.keyDamageResult.frame = CGRect(x: 5, y: perwidth, width: perwidth * 2 - 5, height: cellper * 3)
         self.keyDamageResult.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.heavy)
-        self.keyDamageResult.textColor = UIColor.black
+        self.keyDamageResult.textColor = UIColor.gray
         self.keyDamageResult.numberOfLines = 5
         self.keyDamageResult.minimumScaleFactor = 0.1
         self.addSubview(self.keyDamageResult)

@@ -82,7 +82,7 @@ class ValidPickerCell : UICollectionViewCell {
         totalScoreLabel = UILabel()
         totalScoreLabel.frame = CGRect(x: 0, y: 0, width: perwidth * 2, height: cellper * 0.96)
         totalScoreLabel.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.bold)
-        totalScoreLabel.textColor = UIColor.black
+        totalScoreLabel.textColor = UIColor.gray
         
         analysisBtn = UIButton()
         analysisBtn.frame = CGRect(x: perwidth * 1.0, y: 4.16 * cellper, width: perwidth - 2, height: cellper * 0.96)

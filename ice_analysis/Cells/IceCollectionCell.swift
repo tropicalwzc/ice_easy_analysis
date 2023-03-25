@@ -74,7 +74,7 @@ class IceCollectionCell : UICollectionViewCell {
         
         self.mainContent.frame = CGRect(x:cellper * 1.08, y: cellper * 0.8, width: cellper * 5, height: cellper);
         self.mainContent.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.bold)
-        self.mainContent.setTitleColor(UIColor.black, for: UIControl.State.normal)
+        self.mainContent.setTitleColor(UIColor(named: "lightgreen"), for: UIControl.State.normal)
         self.mainContent.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)
         self.mainContent.addTarget(self, action:#selector(tapped(_:)), for:.touchUpInside)
         

@@ -38,10 +38,13 @@ struct DamageCore {
             let qdamage = cc.qDamage()
             cc.defenseReduce = 0.5
             let edamage = cc.eDamage()
-            
+            let orgExtra = cc.extraDamageRate
+            cc.extraDamageRate = orgExtra + 328
+            let adamage = cc.aDamage()
+            cc.extraDamageRate = orgExtra
             // 19 段切割 最后一段为1.5倍的爆炸
             let expectDamage = qdamage * cc.expectRate() * 0.01 * 20.5
-            res = String(format: "E %1.0f \nQ %1.0f\n大卷期望 %1.0f\n大小卷期望 %1.0f ", edamage, qdamage, expectDamage, expectDamage * 1.4)
+            res = String(format: "E %1.0f Z %1.0f \nQ %1.0f\n大卷期望 %1.0f\n大小卷期望 %1.0f ", edamage, adamage, qdamage, expectDamage, expectDamage * 1.4)
             break
             
         case "胡桃":

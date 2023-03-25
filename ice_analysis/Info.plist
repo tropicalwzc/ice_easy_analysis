@@ -46,6 +46,13 @@
 			<key>攻击</key>
 			<string>542</string>
 		</dict>
+		<key>笼钓瓶一心</key>
+		<dict>
+			<key>大攻击</key>
+			<string>56.3</string>
+			<key>攻击</key>
+			<string>510</string>
+		</dict>
 		<key>试作斩岩</key>
 		<dict>
 			<key>物理伤害</key>
@@ -189,7 +196,7 @@
 		<key>雾切</key>
 		<dict>
 			<key>增伤</key>
-			<string>40</string>
+			<string>50</string>
 			<key>攻击</key>
 			<string>674</string>
 			<key>暴伤</key>
@@ -385,6 +392,8 @@
 		</dict>
 		<key>神里绫华</key>
 		<dict>
+			<key>a</key>
+			<string>109</string>
 			<key>e</key>
 			<string>431</string>
 			<key>q</key>
