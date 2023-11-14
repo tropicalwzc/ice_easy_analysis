@@ -15,6 +15,17 @@
 			<key>攻击</key>
 			<string>608</string>
 		</dict>
+		<key>静水流涌之辉</key>
+		<dict>
+			<key>大生命</key>
+			<string>28</string>
+			<key>增伤</key>
+			<string>24</string>
+			<key>暴伤</key>
+			<string>88.4</string>
+			<key>攻击</key>
+			<string>542</string>
+		</dict>
 		<key>绝弦</key>
 		<dict>
 			<key>增伤</key>
@@ -205,6 +216,23 @@
 	</dict>
 	<key>KnownCharactors</key>
 	<dict>
+		<key>芙宁娜</key>
+		<dict>
+			<key>a</key>
+			<string>4</string>
+			<key>暴击率</key>
+			<string>19.2</string>
+			<key>生命</key>
+			<string>15307</string>
+			<key>防御</key>
+			<string>696</string>
+			<key>攻击</key>
+			<string>262</string>
+			<key>q</key>
+			<string>43</string>
+			<key>e</key>
+			<string>52.01</string>
+		</dict>
 		<key>夜兰</key>
 		<dict>
 			<key>暴击率</key>

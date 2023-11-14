@@ -65,6 +65,36 @@ struct DamageCore {
             res = String(format: "E %1.0f期望%1.0f\n蒸发%1.0f期望%1.0f\nQ %1.0f期望%1.0f ", edamage,edamage*cc.expectRate()*0.01,slimEDamage,slimEDamage*cc.expectRate()*0.01 , qdamage, qdamage*(cc.expectRate())*0.01)
             cc.attack = orgAtk
             break
+            
+        case "芙宁娜":
+            let orgAtk = cc.attack
+            let orgExtra = cc.extraDamageRate
+            cc.attack = cc.hitPoint
+            var subExtra : Double = 28
+            var minusExtra : Double = 0
+            if cc.hitPoint < 40000 {
+                minusExtra = (40000.0-cc.hitPoint)*0.0007
+                subExtra -= minusExtra
+                print("mius extra ",minusExtra)
+            }
+            let edamage = cc.eDamage()
+            cc.extraDamageRate += subExtra
+            cc.extraDamageRate -= 98
+            let qdamage = cc.qDamage()
+            let acure = cc.attack * cc.askillRate * 0.01
+            // 90级吃满2命之后的生命加成效果
+            cc.attack += 21429.8
+            cc.extraDamageRate += 124 + minusExtra
+            let slimQDamage = cc.qDamage()
+            cc.extraDamageRate += 98
+    
+            let slimEDamage = cc.eDamage()
+            let slimacure = cc.attack * cc.askillRate * 0.01 * 1.52
+            res = String(format: "E %1.0f期望%1.0f\n满拐%1.0f期望%1.0f\n奶刀 %1.0f期望%1.0f\n满拐%1.0f期望%1.0f\n荒治疗%1.0f满拐%1.0f ", edamage,edamage*cc.expectRate()*0.01,slimEDamage,slimEDamage*cc.expectRate()*0.01 , qdamage, qdamage*cc.expectRate()*0.01, slimQDamage, slimQDamage*cc.expectRate()*0.01,acure,slimacure)
+            cc.attack = orgAtk
+            cc.extraDamageRate = orgExtra
+            break
+            
         case "珊瑚宫心海":
             let heal = cc.healTotal()
             cc.externalAtkAreaVal = cc.hitPoint * (cc.qskillRate + cc.healRate * 0.15) * 0.01
