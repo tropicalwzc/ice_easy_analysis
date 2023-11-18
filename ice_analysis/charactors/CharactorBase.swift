@@ -79,6 +79,10 @@ class CharactorBase : NSObject {
     public var ElementryCharge2ATKOver100 = 0.0
     ///磐岩结绿生命转攻击
     public var HealthToATKRate = 0.0
+    ///元素战技增伤
+    public var ExtraESkillRate = 0.0
+    ///普攻增伤
+    public var ExtraASkillRate = 0.0
     
     var charactorBaseDict:Dictionary<String,Dictionary<String, String>>!
     var weaponBaseDict:Dictionary<String,Dictionary<String, String>>!
@@ -341,6 +345,11 @@ class CharactorBase : NSObject {
             
             case "额外反应":
                 extraElementMasteryRate += Double(item.value)! * 0.01
+            
+            case "战技增伤":
+                ExtraESkillRate += Double(item.value)!
+            case "普攻增伤":
+                ExtraESkillRate += Double(item.value)!
                 
             default:
                 break

@@ -77,17 +77,16 @@ struct DamageCore {
                 subExtra -= minusExtra
                 print("mius extra ",minusExtra)
             }
+            cc.extraDamageRate += subExtra + cc.ExtraESkillRate
             let edamage = cc.eDamage()
-            cc.extraDamageRate += subExtra
-            cc.extraDamageRate -= 98
+            cc.extraDamageRate -= subExtra + cc.ExtraESkillRate
             let qdamage = cc.qDamage()
             let acure = cc.attack * cc.askillRate * 0.01
             // 90级吃满2命之后的生命加成效果
             cc.attack += 21429.8
             cc.extraDamageRate += 124 + minusExtra
             let slimQDamage = cc.qDamage()
-            cc.extraDamageRate += 98
-    
+            cc.extraDamageRate += 28 + cc.ExtraESkillRate
             let slimEDamage = cc.eDamage()
             let slimacure = cc.attack * cc.askillRate * 0.01 * 1.52
             res = String(format: "E %1.0f期望%1.0f\n满拐%1.0f期望%1.0f\n奶刀 %1.0f期望%1.0f\n满拐%1.0f期望%1.0f\n荒治疗%1.0f满拐%1.0f ", edamage,edamage*cc.expectRate()*0.01,slimEDamage,slimEDamage*cc.expectRate()*0.01 , qdamage, qdamage*cc.expectRate()*0.01, slimQDamage, slimQDamage*cc.expectRate()*0.01,acure,slimacure)
